@@ -49,10 +49,17 @@
 
     <ImageView
         android:id="@+id/aml_iv_add"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_launcher"/>
+        android:src="@drawable/icon_publish"/>
+
+    <View
+        android:id="@+id/aml_translate_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="#55000000"/>
 
 </RelativeLayout>

@@ -8,7 +8,6 @@
         android:id="@+id/ll_tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_login_white"
         android:orientation="vertical"
         android:padding="20dp">
         <!--android:background="@drawable/img_login_page_bg">-->
@@ -27,9 +26,9 @@
                 <EditText
                     android:id="@+id/et_username"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_h"
+                    android:layout_height="45dp"
                     android:inputType="phone"
-                    android:hint="@string/et_phone_number"
+                    android:hint="请输入手机号"
                     />
             </android.support.design.widget.TextInputLayout>
 
@@ -48,19 +47,18 @@
             <EditText
                 android:id="@+id/et_check_code"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/height_h"
+                android:layout_height="45dp"
                 android:layout_weight="2.0"
-                android:drawableLeft="@drawable/img_close"
                 android:drawablePadding="10dp"
-                android:hint="@string/et_check_code" />
+                android:hint="请输入验证码" />
 
             <Button
                 android:layout_width="0dp"
-                android:layout_height="@dimen/height_h"
+                android:layout_height="45dp"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1.0"
                 android:background="@drawable/button_back"
-                android:text="@string/bt_get" />
+                android:text="获取" />
 
 
         </LinearLayout>
@@ -79,9 +77,9 @@
             <EditText
                 android:id="@+id/et_password"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/height_h"
+                android:layout_height="45dp"
                 android:inputType="textPassword"
-                android:hint="@string/et_write_pass" />
+                android:hint="请输入密码" />
             </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
@@ -93,7 +91,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:gravity="right"
-            android:text="@string/tv_forget"
+            android:text="忘记密码"
             android:textColor="#1891AB"
             android:textSize="15sp" />
     </LinearLayout>
@@ -102,11 +100,11 @@
     <Button
         android:id="@+id/bt_login"
         android:layout_width="150dp"
-        android:layout_height="@dimen/height_h"
+        android:layout_height="45dp"
         android:layout_below="@id/ll_tab"
         android:layout_centerHorizontal="true"
         android:background="@drawable/button_back"
-        android:text="@string/bt_login" />
+        android:text="登录" />
 
 
 </RelativeLayout>

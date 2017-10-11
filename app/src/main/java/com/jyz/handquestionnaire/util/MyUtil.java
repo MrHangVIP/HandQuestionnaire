@@ -9,6 +9,7 @@ import android.os.Looper;
 import android.util.Base64;
 import android.util.Log;
 
+import com.jyz.handquestionnaire.BaseApplication;
 import com.jyz.handquestionnaire.listener.ResponseListener;
 
 import java.io.ByteArrayOutputStream;
@@ -249,6 +250,10 @@ public final class MyUtil {
 		} catch (Exception e) {
 			return null;
 		}
+	}
 
+	//支持小数,更加精确
+	public static int toDip(float value) {
+		return (int) (value * Constant.getScreenDensity(BaseApplication.getAPPInstance()));
 	}
 }
