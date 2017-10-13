@@ -29,6 +29,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     protected Context context;
     protected Toolbar toolbar;
     protected TextView toolbarText;
+    protected View contentView;
     public enum ActivityTheme {
         Light,
         Dark
@@ -39,15 +40,15 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = getLayout(inflater, container);
+        contentView = getLayout(inflater, container);
         theme = setActivityTheme();
         setThemes();
-        setToolbar(view);
-        initView(view);
+        setToolbar(contentView);
+        initView(contentView);
         initData();
         initEvent();
-        if (view != null)
-            return view;
+        if (contentView != null)
+            return contentView;
         return super.onCreateView(inflater, container, savedInstanceState);
     }
     public ActivityTheme setActivityTheme() {
@@ -82,9 +83,9 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
 
     protected abstract View getLayout(LayoutInflater inflater, ViewGroup container);
 
-    protected abstract void initData();
-
     protected abstract void initView(View view);
+
+    protected abstract void initData();
 
     protected abstract void initEvent();
 

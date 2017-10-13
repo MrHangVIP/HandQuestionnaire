@@ -10,7 +10,7 @@ import com.jyz.handquestionnaire.BaseFragment;
  * Created by Songzhihang on 2017/10/6.
  * 用户中心fragment
  */
-public class UserCenterFragment extends BaseFragment{
+public class UserCenterFragment extends BaseFragment {
     private static final String TAG = "UserCenterFragment";
 
     @Override

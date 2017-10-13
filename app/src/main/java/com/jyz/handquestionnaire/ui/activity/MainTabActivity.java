@@ -1,5 +1,7 @@
 package com.jyz.handquestionnaire.ui.activity;
 
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
@@ -13,6 +15,8 @@ import com.jyz.handquestionnaire.R;
 import com.jyz.handquestionnaire.library.DefaultAnimationHandler2;
 import com.jyz.handquestionnaire.library.FloatingActionMenu;
 import com.jyz.handquestionnaire.library.MenuAnimationHandler2;
+import com.jyz.handquestionnaire.ui.fragment.HomeFragment;
+import com.jyz.handquestionnaire.ui.fragment.UserCenterFragment;
 import com.jyz.handquestionnaire.util.MyUtil;
 
 import java.util.ArrayList;
@@ -21,6 +25,7 @@ import java.util.List;
 
 /**
  * Created by Songzhihang on 2017/10/6.
+ * 首页tabActivity
  */
 public class MainTabActivity extends BaseActivity {
     private static final String TAG = "MainTabActivity";
@@ -31,6 +36,8 @@ public class MainTabActivity extends BaseActivity {
     private ImageView addIV;
     private FloatingActionMenu centerBottomMenu;
     private View aml_translate_bg;
+    private HomeFragment homeFragment;
+    private UserCenterFragment userCenterFragment;
 
     @Override
     protected void setView() {
@@ -64,17 +71,37 @@ public class MainTabActivity extends BaseActivity {
     @Override
     public void onClick(View v) {
         super.onClick(v);
+        if (v.getId() == R.id.aml_tv_left) {
+            if (homeFragment == null) {
+                homeFragment = new HomeFragment();
+            }
+            replaceFragment(homeFragment);
+        }
+        if (v.getId() == R.id.aml_tv_right) {
+            if (homeFragment == null) {
+                userCenterFragment = new UserCenterFragment();
+            }
+            replaceFragment(userCenterFragment);
+        }
+
         if (v.getId() == R.id.aml_iv_add) {
             showFloatActionMenu();
         }
-        if(v.getId()==R.id.aml_translate_bg){
+        if (v.getId() == R.id.aml_translate_bg) {
             closeWindow();
         }
     }
 
+    private void replaceFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager()
+                .beginTransaction();
+        transaction.replace(R.id.aml_fl_content, fragment);
+        transaction.commit();
+    }
+
     private void showFloatActionMenu() {
         //否则显示弹出框
-        if (centerBottomMenu == null ) {
+        if (centerBottomMenu == null) {
             MenuAnimationHandler2 animationHandler = new DefaultAnimationHandler2();
             List<FloatingActionMenu.Item> subActionItems = new ArrayList<>();
             for (int i = 0; i < 4; i++) {
