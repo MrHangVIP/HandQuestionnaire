@@ -1,6 +1,5 @@
 package com.jyz.handquestionnaire;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -39,7 +38,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContext=this;
+        mContext = this;
         activityList.add(this);
 
         setView();
@@ -54,7 +53,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 
     }
 
-    public void cancelAction(View v){
+    public void cancelAction(View v) {
 //        dismiss();
 //        cancel();
     }
@@ -69,10 +68,9 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     }
 
     /**
-     *
      * @param Res 资源id
      */
-    protected void setRight(int Res){
+    protected void setRight(int Res) {
         toolbar.setRight(Res);
     }
 
@@ -113,9 +111,9 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(toast==null){
-                    toast=Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT);
-                }else{
+                if (toast == null) {
+                    toast = Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT);
+                } else {
                     toast.setText(msg);
                 }
                 toast.show();
@@ -157,7 +155,11 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         if (bundle != null)
             intent.putExtra("bundle", bundle);
         startActivity(intent);
-        overridePendingTransition(resId, 0);
+        if (resId == 0) {
+            overridePendingTransition(R.anim.slide_in_right, R.anim.anim_fade_out);
+        } else {
+            overridePendingTransition(resId, 0);
+        }
     }
 
     /**
@@ -226,7 +228,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 //        SpfUtil.clearAll();
 //        goToNext(LoginActivity.class);
 //    }
-
     @Override
     public void onClick(View v) {
 
@@ -243,7 +244,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        MyUtil.MyLogE(TAG,"onDestroy");
+        MyUtil.MyLogE(TAG, "onDestroy");
         activityList.remove(this);
     }
 }

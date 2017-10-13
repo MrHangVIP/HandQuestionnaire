@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.jyz.handquestionnaire.BaseFragment;
 import com.jyz.handquestionnaire.R;
+import com.jyz.handquestionnaire.util.Constant;
 
 import java.util.ArrayList;
 
@@ -51,6 +52,8 @@ public class HomeFragment extends BaseFragment {
         fhl_tv_new = (TextView) contentView.findViewById(R.id.fhl_tv_new);
         fhl_tv_all = (TextView) contentView.findViewById(R.id.fhl_tv_all);
         fhl_viewpager = (ViewPager) contentView.findViewById(R.id.fhl_viewpager);
+        cursorMargin = (RelativeLayout.LayoutParams) fhl_cursor.getLayoutParams();
+        cursorMargin.leftMargin = (Constant.getScreenWidth(getActivity()) - fhl_ll_tab_layout.getMeasuredWidth()) / 2;
     }
 
     @Override
@@ -105,7 +108,7 @@ public class HomeFragment extends BaseFragment {
                 int margin = (int) ((positionOffset + position) * (fhl_ll_tab_layout.getMeasuredWidth() / 3));
                 Log.e("SZH", "margin: " + margin);
                 Log.e("SZH", "position: " + position);
-                cursorMargin.leftMargin = (fhl_ll_tab_layout.getMeasuredWidth() / 3 - fhl_cursor.getMeasuredWidth()) / 2 + margin;
+                cursorMargin.leftMargin = (Constant.getScreenWidth(getActivity()) - fhl_ll_tab_layout.getMeasuredWidth()) / 2 + margin;
                 fhl_cursor.setLayoutParams(cursorMargin);
                 fhl_cursor.invalidate();
             }

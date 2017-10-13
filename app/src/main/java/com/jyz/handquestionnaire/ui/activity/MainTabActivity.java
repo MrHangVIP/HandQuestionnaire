@@ -56,7 +56,10 @@ public class MainTabActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
+        if (homeFragment == null) {
+            homeFragment = new HomeFragment();
+        }
+        replaceFragment(homeFragment);
     }
 
     @Override
@@ -78,7 +81,7 @@ public class MainTabActivity extends BaseActivity {
             replaceFragment(homeFragment);
         }
         if (v.getId() == R.id.aml_tv_right) {
-            if (homeFragment == null) {
+            if (userCenterFragment == null) {
                 userCenterFragment = new UserCenterFragment();
             }
             replaceFragment(userCenterFragment);

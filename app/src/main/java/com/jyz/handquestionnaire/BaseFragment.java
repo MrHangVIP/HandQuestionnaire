@@ -145,7 +145,11 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         if (bundle != null)
             intent.putExtra(Str_bundle, bundle);
         getActivity().startActivity(intent);
-        getActivity().overridePendingTransition(resId, 0);
+        if (resId == 0) {
+            getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.anim_fade_out);
+        } else {
+            getActivity().overridePendingTransition(resId, 0);
+        }
     }
 
     /**
