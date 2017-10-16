@@ -110,7 +110,7 @@ public class RegistFragment extends BaseFragment {
                 break;
 
             case R.id.bt_send:
-
+            default:
                 break;
 
         }

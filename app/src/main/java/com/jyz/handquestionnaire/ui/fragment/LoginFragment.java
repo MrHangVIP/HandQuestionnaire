@@ -119,6 +119,8 @@ public class LoginFragment extends BaseFragment {
             case R.id.tv_forget_pass:
                 jumpToNext(ForgetPassActivity.class);
                 getActivity().finish();
+
+            default:
                 break;
         }
     }

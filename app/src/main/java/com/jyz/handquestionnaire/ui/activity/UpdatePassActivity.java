@@ -9,13 +9,13 @@ import com.jyz.handquestionnaire.R;
 
 /**
  * @discription 修改密码activity
- * @autor   songzhihang
- * @time   2017/10/13  下午5:53
+ * @autor songzhihang
+ * @time 2017/10/13  下午5:53
  **/
 public class UpdatePassActivity extends BaseActivity {
 
 
-    private EditText newPassET ,newPassAgainET;
+    private EditText newPassET, newPassAgainET;
     private Button saveBT;
 
     @Override
@@ -27,9 +27,9 @@ public class UpdatePassActivity extends BaseActivity {
     @Override
     protected void findViews() {
         setTitle("忘记密码");
-        newPassET=(EditText)findViewById(R.id.et_new_pass);
-        newPassAgainET=(EditText)findViewById(R.id.et_new_pass_again);
-        saveBT=(Button)findViewById(R.id.bt_save);
+        newPassET = (EditText) findViewById(R.id.et_new_pass);
+        newPassAgainET = (EditText) findViewById(R.id.et_new_pass_again);
+        saveBT = (Button) findViewById(R.id.bt_save);
     }
 
     @Override
@@ -44,10 +44,11 @@ public class UpdatePassActivity extends BaseActivity {
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.bt_save:
                 jumpToNext(LoginActivity.class);
                 finish();
+            default:
                 break;
         }
     }

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E1E1E1"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="问卷名称"
+            android:textColor="#111111"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/acql_et_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edittext_round_bg"
+            android:hint="请输入问卷名称"
+            android:padding="10dp"
+            android:textColor="#111111"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/acql_tv_notice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="问卷名不能为空!"
+            android:textColor="#FF0000"
+            android:textSize="15sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/acql_tv_submit"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/submit_round_bg"
+            android:gravity="center"
+            android:text="创建问卷"
+            android:layout_marginTop="10dp"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

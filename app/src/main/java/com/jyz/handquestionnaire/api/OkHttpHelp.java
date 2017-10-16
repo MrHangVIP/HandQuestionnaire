@@ -35,8 +35,6 @@ public class OkHttpHelp<T> {
 
     private OkHttpHelp() {
         mOkHttpClient = new OkHttpClient();
-        //cookie enabled
-//        mOkHttpClient.setCookieHandler(new CookieManager(null, CookiePolicy.ACCEPT_ORIGINAL_SERVER));
         mGson = new Gson();
     }
 

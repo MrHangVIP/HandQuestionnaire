@@ -80,6 +80,7 @@ public class WelComeActivity extends BaseActivity {
                 } else {
                     goToNext(MainTabActivity.class);
                 }
+            default:
                 break;
 
         }

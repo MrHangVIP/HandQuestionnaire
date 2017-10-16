@@ -33,6 +33,8 @@
         <activity android:name=".ui.activity.LoginActivity"/>
         <activity android:name=".ui.activity.UpdatePassActivity"/>
         <activity android:name=".ui.activity.ForgetPassActivity"/>
+        <activity android:name=".ui.activity.CreateQuestionActivity"/>
+        <activity android:name=".ui.activity.EditQuestionActivity"/>
     </application>
 
 </manifest>

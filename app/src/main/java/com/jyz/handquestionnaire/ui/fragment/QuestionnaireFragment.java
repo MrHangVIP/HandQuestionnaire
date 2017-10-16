@@ -43,6 +43,7 @@ public class QuestionnaireFragment extends BaseFragment implements SwipeRefreshL
                         ((BaseActivity) getActivity()).toast("刷新成功！");
                     }
                     break;
+                default:
             }
         }
     };
