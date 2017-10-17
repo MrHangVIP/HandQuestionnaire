@@ -68,8 +68,8 @@ public class CreateQuestionActivity  extends BaseActivity{
                 }else {
                     Bundle bundle=new Bundle();
                     bundle.putString("title",acql_et_name.getText().toString().trim());
-                    jumpToNext(EditQuestionActivity.class);
                     acql_tv_notice.setVisibility(View.GONE);
+                    jumpToNext(EditQuestionActivity.class,bundle);
                 }
             }
         });

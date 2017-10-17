@@ -36,8 +36,9 @@ public class CreateSelectionActivity extends BaseActivity{
 
     @Override
     protected void initData() {
-        String title=getIntent().getBundleExtra("bundle").getString("title","单选题");
-        setTitle(title);
+//        String title=getIntent().getBundleExtra("bundle").getString("title",);
+//        setTitle(title);
+        setTitle("单选题");
     }
 
     @Override

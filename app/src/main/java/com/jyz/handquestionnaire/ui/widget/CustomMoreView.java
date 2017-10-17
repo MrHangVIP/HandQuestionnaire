@@ -21,7 +21,9 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
+import com.jyz.handquestionnaire.BaseActivity;
 import com.jyz.handquestionnaire.R;
+import com.jyz.handquestionnaire.ui.activity.CreateSelectionActivity;
 
 import java.util.ArrayList;
 
@@ -59,6 +61,7 @@ public class CustomMoreView extends PopupWindow implements OnClickListener {
 
     /**
      * 显示更多按钮的样式
+     *
      * @param anchor 在哪个view的下面
      * @param views  需要显示的view
      * @param travel 显示的行数
@@ -111,7 +114,13 @@ public class CustomMoreView extends PopupWindow implements OnClickListener {
     private void closeAnimation(final ViewGroup layout) {
         for (int i = 0; i < layout.getChildCount(); i++) {
             final View child = layout.getChildAt(i);
-            child.setOnClickListener(this);
+            child.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((BaseActivity) mContext).jumpToNext(CreateSelectionActivity.class);
+                    dismiss();
+                }
+            });
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
