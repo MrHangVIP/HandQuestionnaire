@@ -92,7 +92,13 @@ public class CustomMoreView extends PopupWindow implements OnClickListener {
     private void showAnimation(ViewGroup layout) {
         for (int i = 0; i < layout.getChildCount(); i++) {
             final View child = layout.getChildAt(i);
-            child.setOnClickListener(this);
+            child.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((BaseActivity) mContext).jumpToNext(CreateSelectionActivity.class);
+                    dismiss();
+                }
+            });
             child.setVisibility(View.INVISIBLE);
             mHandler.postDelayed(new Runnable() {
 
