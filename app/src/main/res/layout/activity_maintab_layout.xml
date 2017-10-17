@@ -18,32 +18,55 @@
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/aml_tv_left"
+        <LinearLayout
+            android:id="@+id/aml_ll_left"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1.0"
-            android:text="首页"
-            android:gravity="center"
-            android:textSize="12sp"
-            android:textColor="#333333"
-            android:drawableTop="@drawable/ic_launcher"/>
+            android:orientation="vertical"
+            android:gravity="center">
 
+            <ImageView
+                android:id="@+id/aml_iv_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_shouye_press"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="首页"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="#333333"
+               />
+        </LinearLayout>
         <ImageView
             android:layout_width="90dp"
             android:layout_height="match_parent" />
 
-        <TextView
-            android:id="@+id/aml_tv_right"
+        <LinearLayout
+            android:id="@+id/aml_ll_right"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1.0"
-            android:text="我的"
-            android:gravity="center"
-            android:textSize="12sp"
-            android:textColor="#333333"
-            android:drawableTop="@drawable/ic_launcher"/>
+            android:orientation="vertical"
+            android:gravity="center">
 
+            <ImageView
+                android:id="@+id/aml_iv_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_mime_normal"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="我的"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="#333333" />
+        </LinearLayout>
 
     </LinearLayout>
 

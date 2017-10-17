@@ -38,7 +38,7 @@ public class WelComeActivity extends BaseActivity {
         for (int i = 0; i < 3; i++) {
             ImageView imageView = new ImageView(mContext);
             imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            imageView.setImageResource(R.drawable.ic_launcher);
+            imageView.setImageResource(R.drawable.img_welcome_01);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             views.add(imageView);
         }

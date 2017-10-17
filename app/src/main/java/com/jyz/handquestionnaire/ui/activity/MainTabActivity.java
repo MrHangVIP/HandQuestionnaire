@@ -8,7 +8,6 @@ import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.jyz.handquestionnaire.BaseActivity;
 import com.jyz.handquestionnaire.R;
@@ -31,8 +30,10 @@ public class MainTabActivity extends BaseActivity {
     private static final String TAG = "MainTabActivity";
     private FrameLayout contentFL;
     private LinearLayout tabLL;
-    private TextView leftTV;
-    private TextView rightTV;
+    private LinearLayout aml_ll_left;
+    private LinearLayout aml_ll_right;
+    private ImageView aml_iv_left;
+    private ImageView aml_iv_right;
     private ImageView addIV;
     private FloatingActionMenu centerBottomMenu;
     private View aml_translate_bg;
@@ -48,8 +49,10 @@ public class MainTabActivity extends BaseActivity {
     protected void findViews() {
         contentFL = (FrameLayout) findViewById(R.id.aml_fl_content);
         tabLL = (LinearLayout) findViewById(R.id.aml_ll_tab_layout);
-        leftTV = (TextView) findViewById(R.id.aml_tv_left);
-        rightTV = (TextView) findViewById(R.id.aml_tv_right);
+        aml_ll_left = (LinearLayout) findViewById(R.id.aml_ll_left);
+        aml_ll_right = (LinearLayout) findViewById(R.id.aml_ll_right);
+        aml_iv_left = (ImageView) findViewById(R.id.aml_iv_left);
+        aml_iv_right = (ImageView) findViewById(R.id.aml_iv_right);
         addIV = (ImageView) findViewById(R.id.aml_iv_add);
         aml_translate_bg = (View) findViewById(R.id.aml_translate_bg);
     }
@@ -64,8 +67,8 @@ public class MainTabActivity extends BaseActivity {
 
     @Override
     protected void setListener() {
-        leftTV.setOnClickListener(this);
-        rightTV.setOnClickListener(this);
+        aml_ll_right.setOnClickListener(this);
+        aml_ll_left.setOnClickListener(this);
         addIV.setOnClickListener(this);
         aml_translate_bg.setOnClickListener(this);
     }
@@ -74,16 +77,18 @@ public class MainTabActivity extends BaseActivity {
     @Override
     public void onClick(View v) {
         super.onClick(v);
-        if (v.getId() == R.id.aml_tv_left) {
+        if (v.getId() == R.id.aml_ll_left) {
             if (homeFragment == null) {
                 homeFragment = new HomeFragment();
             }
+            replaceIcon(0);
             replaceFragment(homeFragment);
         }
-        if (v.getId() == R.id.aml_tv_right) {
+        if (v.getId() == R.id.aml_ll_right) {
             if (userCenterFragment == null) {
                 userCenterFragment = new UserCenterFragment();
             }
+            replaceIcon(1);
             replaceFragment(userCenterFragment);
         }
 
@@ -114,6 +119,7 @@ public class MainTabActivity extends BaseActivity {
                 rlIcon.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        jumpToNext(CreateQuestionActivity.class);
                         closeWindow();
                     }
                 });
@@ -160,5 +166,15 @@ public class MainTabActivity extends BaseActivity {
         animation.setFillAfter(true);// 动画执行完后是否停留在执行完的状态
         animation.setStartOffset(0);
         return animation;
+    }
+
+    private void replaceIcon(int positon) {
+        if (positon == 0) {
+            aml_iv_left.setImageResource(R.drawable.icon_shouye_press);
+            aml_iv_right.setImageResource(R.drawable.icon_mime_normal);
+        } else {
+            aml_iv_left.setImageResource(R.drawable.icon_shouye_normal);
+            aml_iv_right.setImageResource(R.drawable.icon_mime_press);
+        }
     }
 }

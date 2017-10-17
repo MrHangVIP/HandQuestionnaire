@@ -3,11 +3,14 @@
     android:oneshot="false">
     <item
         android:drawable="@drawable/img_loading_1"
-        android:duration="300"/>
+        android:duration="300" />
     <item
         android:drawable="@drawable/img_loading_2"
-        android:duration="300"/>
+        android:duration="300" />
     <item
         android:drawable="@drawable/img_loading_3"
-        android:duration="300"/>
+        android:duration="300" />
+    <item
+        android:drawable="@drawable/img_loading_4"
+        android:duration="300" />
 </animation-list>

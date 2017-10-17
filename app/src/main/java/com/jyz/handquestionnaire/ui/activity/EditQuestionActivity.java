@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.jyz.handquestionnaire.BaseActivity;
 import com.jyz.handquestionnaire.R;
+import com.jyz.handquestionnaire.ui.widget.CustomMoreView;
 
 /**
  * @discription 编辑问卷页面
@@ -40,7 +41,8 @@ public class EditQuestionActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
+        String title=getIntent().getBundleExtra("bundle").getString("title");
+        aeql_tv_title.setText(title);
     }
 
     @Override
@@ -49,6 +51,9 @@ public class EditQuestionActivity extends BaseActivity {
         aeql_tv_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                CustomMoreView customMoreView=new CustomMoreView(EditQuestionActivity.this);
+                customMoreView.init();
+                customMoreView.showMoreWindow(toolbar);
             }
         });
 

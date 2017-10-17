@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:padding="10dp">
+
+    <CheckBox
+        android:id="@+id/iscl_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="false"/>
+
+    <EditText
+        android:id="@+id/iscl_edittext"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:background="@drawable/edittext_round_bg"
+        android:hint="请输入选项答案"
+        android:padding="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="1.0"
+        android:singleLine="true"
+        android:textColor="#111111"
+        android:textSize="16sp" />
+
+
+    <ImageView
+        android:id="@+id/iscl_iv_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_delete"/>
+
+</LinearLayout>

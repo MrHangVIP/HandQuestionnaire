@@ -1,5 +1,6 @@
 package com.jyz.handquestionnaire.ui.activity;
 
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -65,6 +66,9 @@ public class CreateQuestionActivity  extends BaseActivity{
                 if(TextUtils.isEmpty(acql_et_name.getText().toString())){
                     acql_tv_notice.setVisibility(View.VISIBLE);
                 }else {
+                    Bundle bundle=new Bundle();
+                    bundle.putString("title",acql_et_name.getText().toString().trim());
+                    jumpToNext(EditQuestionActivity.class);
                     acql_tv_notice.setVisibility(View.GONE);
                 }
             }
