@@ -67,7 +67,6 @@
 
             <!-- 选项动态添加 -->
             <LinearLayout
-                android:id="@+id/acsl_ll_selection_layout"
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -98,12 +97,92 @@
 
                 </LinearLayout>
 
-                <include layout="@layout/item_selection_create_layout" />
+                <!-- 动态选项 -->
+                <LinearLayout
+                    android:id="@+id/acsl_ll_selection_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                <include layout="@layout/item_selection_create_layout" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/acsl_tv_selection_add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="添加选项"
+                    android:textSize="18sp"
+                    android:textColor="#111111"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="20dp"/>
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/acsl_ll_least_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="#FFFFFF"
+                android:padding="10dp"
+                android:layout_marginTop="10dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:text="最少选择"
+                    android:textSize="16sp"
+                    android:textColor="#111111"/>
+
+               <TextView
+                   android:id="@+id/acsl_tv_select_least"
+                   android:paddingRight="5dp"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:gravity="center"
+                   android:text="不限"
+                   android:textSize="16sp"
+                   android:textColor="#CCCCCC"
+                   android:drawablePadding="5dp"
+                   android:drawableRight="@drawable/icon_select_arraw"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/acsl_ll_more_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="#FFFFFF"
+                android:padding="10dp"
+                android:layout_marginTop="10dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:text="最多选择"
+                    android:textSize="16sp"
+                    android:textColor="#111111"/>
+
+                <TextView
+                    android:id="@+id/acsl_tv_select_more"
+                    android:paddingRight="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="不限"
+                    android:textSize="16sp"
+                    android:textColor="#CCCCCC"
+                    android:drawablePadding="5dp"
+                    android:drawableRight="@drawable/icon_select_arraw"/>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

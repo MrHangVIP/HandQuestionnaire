@@ -16,7 +16,7 @@ import com.jyz.handquestionnaire.R;
  * @autor songzhihang
  * @time 2017/10/16  下午4:10
  **/
-public class CreateQuestionActivity  extends BaseActivity{
+public class CreateQuestionActivity extends BaseActivity {
     private static final String TAG = "CreateQuestionActivity";
 
     private EditText acql_et_name;
@@ -31,9 +31,9 @@ public class CreateQuestionActivity  extends BaseActivity{
     @Override
     protected void findViews() {
         setTitle("创建问卷");
-        acql_et_name=(EditText)findViewById(R.id.acql_et_name);
-        acql_tv_notice=(TextView)findViewById(R.id.acql_tv_notice);
-        acql_tv_submit=(TextView)findViewById(R.id.acql_tv_submit);
+        acql_et_name = (EditText) findViewById(R.id.acql_et_name);
+        acql_tv_notice = (TextView) findViewById(R.id.acql_tv_notice);
+        acql_tv_submit = (TextView) findViewById(R.id.acql_tv_submit);
     }
 
     @Override
@@ -63,13 +63,13 @@ public class CreateQuestionActivity  extends BaseActivity{
         acql_tv_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(TextUtils.isEmpty(acql_et_name.getText().toString())){
+                if (TextUtils.isEmpty(acql_et_name.getText().toString())) {
                     acql_tv_notice.setVisibility(View.VISIBLE);
-                }else {
-                    Bundle bundle=new Bundle();
-                    bundle.putString("title",acql_et_name.getText().toString().trim());
+                } else {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("title", acql_et_name.getText().toString().trim());
                     acql_tv_notice.setVisibility(View.GONE);
-                    jumpToNext(EditQuestionActivity.class,bundle);
+                    jumpToNext(EditQuestionActivity.class, bundle);
                 }
             }
         });
