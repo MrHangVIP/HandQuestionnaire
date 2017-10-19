@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#E1E1E1">
 
     <include layout="@layout/toolbar" />
 
@@ -60,6 +61,7 @@
                     android:layout_weight="1.0"
                     android:gravity="center"
                     android:text="多选题"
+                    android:background="@drawable/selection_right_round_bg"
                     android:textColor="#111111"
                     android:textSize="16sp" />
 
@@ -113,6 +115,9 @@
                     android:text="添加选项"
                     android:textSize="18sp"
                     android:textColor="#111111"
+                    android:drawableLeft="@drawable/icon_publish"
+                    android:gravity="center"
+                    android:drawablePadding="5dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_margin="20dp"/>
 

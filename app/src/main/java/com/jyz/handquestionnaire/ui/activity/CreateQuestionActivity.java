@@ -1,5 +1,6 @@
 package com.jyz.handquestionnaire.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;

@@ -12,29 +12,71 @@
         android:layout_margin="10dp"
         android:orientation="horizontal">
 
-        <ImageView
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:layout_weight="1.0"
-            android:src="@drawable/icon_publish" />
+            android:orientation="vertical"
+            android:gravity="center_horizontal|bottom"
+            android:layout_marginTop="20dp">
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_weight="1.0"
-            android:src="@drawable/icon_publish" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_publish" />
 
-        <ImageView
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:text="单选题"
+                android:layout_marginTop="5dp"
+                android:textColor="#111111"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:layout_weight="1.0"
-            android:src="@drawable/icon_publish" />
+            android:orientation="vertical"
+            android:gravity="center_horizontal|bottom"
+            android:layout_marginTop="20dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_publish" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:text="多选题"
+                android:layout_marginTop="5dp"
+                android:textColor="#111111"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:orientation="vertical"
+            android:gravity="center_horizontal|bottom"
+            android:layout_marginTop="20dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_publish" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:text="填空题"
+                android:layout_marginTop="5dp"
+                android:textColor="#111111"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

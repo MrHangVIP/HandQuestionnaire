@@ -39,7 +39,7 @@ public class CustomMoreView extends PopupWindow implements OnClickListener {
     private int mWidth;
     private int mHeight;
     private int statusBarHeight;
-
+    private OnClickListener listener;
     private Handler mHandler = new Handler();
 
     public CustomMoreView(Activity context) {
@@ -92,10 +92,14 @@ public class CustomMoreView extends PopupWindow implements OnClickListener {
     private void showAnimation(ViewGroup layout) {
         for (int i = 0; i < layout.getChildCount(); i++) {
             final View child = layout.getChildAt(i);
+            final int position=i;
             child.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((BaseActivity) mContext).jumpToNext(CreateSelectionActivity.class);
+                    if(listener!=null){
+                        v.setTag(position);
+                        listener.onClick(v);//回调
+                    }
                     dismiss();
                 }
             });
@@ -200,6 +204,10 @@ public class CustomMoreView extends PopupWindow implements OnClickListener {
         public Float calculate(float t, float b, float c, float d) {
             return c * ((t = t / d - 1) * t * ((s + 1) * t + s) + 1) + b;
         }
+    }
+
+    public void setOnClickListener(OnClickListener listener){
+        this.listener=listener;
     }
 
 }
