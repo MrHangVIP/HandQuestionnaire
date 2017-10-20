@@ -10,7 +10,9 @@ import java.util.List;
  **/
 public class QuestionItem implements Serializable{
 
-    private int id;
+    private int questionId;
+
+    private int questionnaireId;
 
     private String title;
 
@@ -26,12 +28,20 @@ public class QuestionItem implements Serializable{
 
     private String answerStr;//答案 可以是文字,可以是选项的列表
 
-    public int getId() {
-        return id;
+    public int getQuestionId() {
+        return questionId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public int getQuestionnaireId() {
+        return questionnaireId;
+    }
+
+    public void setQuestionnaireId(int questionnaireId) {
+        this.questionnaireId = questionnaireId;
+    }
+
+    public void setQuestionId(int questionId) {
+        this.questionId = questionId;
     }
 
     public String getTitle() {
