@@ -76,7 +76,7 @@ public class CreateSelectionActivity extends BaseActivity {
             if (getIntent().getBundleExtra("bundle").getSerializable("questionItem") != null) {//修改
                 setDateToView((QuestionItem) getIntent().getBundleExtra("bundle").getSerializable("questionItem"));
                 return;
-            } else {
+            } else {//添加
                 type = getIntent().getBundleExtra("bundle").getString("type", "1");
             }
         }

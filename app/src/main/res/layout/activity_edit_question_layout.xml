@@ -45,6 +45,7 @@
 
 
                 <TextView
+                    android:id="@+id/aeql_tv_introduce"
                     android:layout_below="@+id/aeql_tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
