@@ -8,6 +8,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.jyz.handquestionnaire.BaseApplication;
 import com.jyz.handquestionnaire.listener.ResponseListener;
@@ -255,5 +257,42 @@ public final class MyUtil {
 	//支持小数,更加精确
 	public static int toDip(float value) {
 		return (int) (value * Constant.getScreenDensity(BaseApplication.getAPPInstance()));
+	}
+
+	/**
+	 * 隐藏软键盘
+	 *
+	 * @param v
+	 */
+	public static void hideSoftInput(View v) {
+		if (v == null)
+			return;
+		InputMethodManager imm = (InputMethodManager) v.getContext()
+				.getSystemService(Context.INPUT_METHOD_SERVICE);
+		if (imm.isActive()) {
+			imm.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
+		}
+	}
+
+	/**
+	 * 显示软键盘
+	 *
+	 * @param v
+	 */
+	public static void showSoftInput(View v) {
+		if (v == null)
+			return;
+		InputMethodManager imm = (InputMethodManager) v.getContext()
+				.getSystemService(Context.INPUT_METHOD_SERVICE);
+		if (!imm.isActive()) {
+			imm.showSoftInput(v, InputMethodManager.SHOW_FORCED);
+			imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+		}
+	}
+
+	public static void setVisibility(View view, int flag) {
+		if (view != null && view.getVisibility() != flag) {
+			view.setVisibility(flag);
+		}
 	}
 }

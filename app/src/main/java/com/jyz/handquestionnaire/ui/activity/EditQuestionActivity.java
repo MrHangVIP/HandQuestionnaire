@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -18,6 +19,7 @@ import com.jyz.handquestionnaire.R;
 import com.jyz.handquestionnaire.bean.QuestionItem;
 import com.jyz.handquestionnaire.bean.QuestionnaireItem;
 import com.jyz.handquestionnaire.ui.widget.CustomMoreView;
+import com.jyz.handquestionnaire.ui.widget.MMAlert;
 import com.jyz.handquestionnaire.util.Constant;
 import com.jyz.handquestionnaire.util.MyUtil;
 
@@ -165,7 +167,22 @@ public class EditQuestionActivity extends BaseActivity {
         iqcl_tv_delete_click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                aeql_ll_question_layout.removeView(view);
+                MMAlert.showAlert(mContext, null, "确定删除?", getResources().getString(R.string.app_tip), null, null,
+                        new MMAlert.OnDialogClick() {
+
+                            @Override
+                            public void onOkListener(String content) {
+                                aeql_ll_question_layout.removeView(view);
+                            }
+
+                            @Override
+                            public void onClickPreListener(EditText et) {
+                            }
+
+                            @Override
+                            public void onCancelListener(EditText et) {
+                            }
+                        }, true);
             }
         });
         iqcl_rl_content_layout.getLayoutParams().width = Constant.getScreenWidth(mContext) - MyUtil.toDip(30);

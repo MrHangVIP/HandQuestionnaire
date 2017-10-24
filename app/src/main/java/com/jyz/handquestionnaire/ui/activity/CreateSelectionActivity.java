@@ -15,8 +15,8 @@ import com.jyz.handquestionnaire.BaseActivity;
 import com.jyz.handquestionnaire.R;
 import com.jyz.handquestionnaire.bean.QuestionItem;
 import com.jyz.handquestionnaire.bean.SelectionItem;
+import com.jyz.handquestionnaire.ui.widget.MMAlert;
 import com.jyz.handquestionnaire.ui.widget.WheelViewDialog;
-import com.jyz.handquestionnaire.util.MyUtil;
 import com.jyz.handquestionnaire.util.WheelUtil;
 import com.jyz.handquestionnaire.util.WheelViewDialogUtil;
 
@@ -208,18 +208,33 @@ public class CreateSelectionActivity extends BaseActivity {
                 if (acsl_ll_selection_layout.getChildCount() <= 2) {
                     toast("选项不能小于2个");
                 } else {
-                    acsl_ll_selection_layout.removeView(view);
-                    checkBoxes.remove(iscl_checkbox);
-                    editTexts.remove(iscl_edittext);
-                    //刷新最大最小选项
-                    String text = acsl_tv_select_least.getText().toString().trim();
-                    if (!TextUtils.equals("不限", text) && Integer.parseInt(text) > acsl_ll_selection_layout.getChildCount()) {
-                        acsl_tv_select_least.setText(acsl_ll_selection_layout.getChildCount());
-                    }
-                    text = acsl_tv_select_more.getText().toString().trim();
-                    if (!TextUtils.equals("不限", text) && Integer.parseInt(text) > acsl_ll_selection_layout.getChildCount()) {
-                        acsl_tv_select_more.setText(acsl_ll_selection_layout.getChildCount());
-                    }
+                    MMAlert.showAlert(mContext, null, "确定删除?", getResources().getString(R.string.app_tip), null, null,
+                            new MMAlert.OnDialogClick() {
+
+                                @Override
+                                public void onOkListener(String content) {
+                                    acsl_ll_selection_layout.removeView(view);
+                                    checkBoxes.remove(iscl_checkbox);
+                                    editTexts.remove(iscl_edittext);
+                                    //刷新最大最小选项
+                                    String text = acsl_tv_select_least.getText().toString().trim();
+                                    if (!TextUtils.equals("不限", text) && Integer.parseInt(text) > acsl_ll_selection_layout.getChildCount()) {
+                                        acsl_tv_select_least.setText(acsl_ll_selection_layout.getChildCount());
+                                    }
+                                    text = acsl_tv_select_more.getText().toString().trim();
+                                    if (!TextUtils.equals("不限", text) && Integer.parseInt(text) > acsl_ll_selection_layout.getChildCount()) {
+                                        acsl_tv_select_more.setText(acsl_ll_selection_layout.getChildCount());
+                                    }
+                                }
+
+                                @Override
+                                public void onClickPreListener(EditText et) {
+                                }
+
+                                @Override
+                                public void onCancelListener(EditText et) {
+                                }
+                            }, true);
                 }
             }
         });
