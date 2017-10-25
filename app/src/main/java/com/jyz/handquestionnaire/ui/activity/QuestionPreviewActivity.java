@@ -69,7 +69,7 @@ public class QuestionPreviewActivity extends BaseActivity {
     }
 
     private void createContentView(QuestionnaireItem questionnaireItem) {
-        if (questionnaireItem != null && questionnaireItem.getQuestionItemList() != null) {
+        if (questionnaireItem != null && questionnaireItem.getQuestionItemList() != null && questionnaireItem.getQuestionItemList().size() != 0) {
             for (int i = 0; i < questionnaireItem.getQuestionItemList().size(); i++) {
                 QuestionItem questionItem = questionnaireItem.getQuestionItemList().get(i);
                 String type = questionItem.getType();
