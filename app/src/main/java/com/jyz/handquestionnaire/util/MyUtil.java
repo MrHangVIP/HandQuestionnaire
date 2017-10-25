@@ -2,6 +2,7 @@
 package com.jyz.handquestionnaire.util;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
@@ -10,6 +11,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 
 import com.jyz.handquestionnaire.BaseApplication;
 import com.jyz.handquestionnaire.listener.ResponseListener;
@@ -293,6 +295,43 @@ public final class MyUtil {
 	public static void setVisibility(View view, int flag) {
 		if (view != null && view.getVisibility() != flag) {
 			view.setVisibility(flag);
+		}
+	}
+
+	/**
+	 * 设置下左右图片大小
+	 *
+	 * @param view
+	 * @param width
+	 * @param height
+	 * @param attr
+	 */
+	public static void setCompoundDrawables(TextView view, int width,
+											int height, int attr) {
+		Drawable[] drawables = view.getCompoundDrawables();
+		Drawable myImage = drawables[attr];
+		if (myImage == null) {
+			return;
+		}
+		myImage.setBounds(0, 0, width, height);
+		switch (attr) {
+			case 0:
+				view.setCompoundDrawables(myImage, drawables[1], drawables[2],
+						drawables[3]);
+				break;
+			case 1:
+				view.setCompoundDrawables(drawables[0], myImage, drawables[2],
+						drawables[3]);
+				break;
+			case 2:
+				view.setCompoundDrawables(drawables[0], drawables[1], myImage,
+						drawables[3]);
+				break;
+			case 3:
+				view.setCompoundDrawables(drawables[0], drawables[1], drawables[2],
+						myImage);
+				break;
+
 		}
 	}
 }

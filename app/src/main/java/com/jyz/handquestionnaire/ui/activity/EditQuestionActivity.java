@@ -2,9 +2,11 @@ package com.jyz.handquestionnaire.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,8 @@ import com.jyz.handquestionnaire.ui.widget.CustomMoreView;
 import com.jyz.handquestionnaire.ui.widget.MMAlert;
 import com.jyz.handquestionnaire.util.Constant;
 import com.jyz.handquestionnaire.util.MyUtil;
+
+import java.util.ArrayList;
 
 /**
  * @discription 编辑问卷页面
@@ -52,6 +56,7 @@ public class EditQuestionActivity extends BaseActivity {
     @Override
     protected void findViews() {
         setTitle("编辑问卷");
+        setMenu();
         questionnaireItem = new QuestionnaireItem();
         aeql_tv_title = (TextView) findViewById(R.id.aeql_tv_title);
         aeql_tv_introduce = (TextView) findViewById(R.id.aeql_tv_introduce);
@@ -99,6 +104,14 @@ public class EditQuestionActivity extends BaseActivity {
                             intent.putExtra("bundle", bundle);
                             startActivityForResult(intent, REQUEST_CODE);
                         }
+                        if (position == 2) {//填空题
+                            Intent intent = new Intent();
+                            intent.setClass(EditQuestionActivity.this, CreateBlankActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("type", "3");
+                            intent.putExtra("bundle", bundle);
+                            startActivityForResult(intent, REQUEST_CODE);
+                        }
                     }
                 });
             }
@@ -123,6 +136,26 @@ public class EditQuestionActivity extends BaseActivity {
                 intent.setClass(mContext, UpdateContentActivity.class);
                 intent.putExtra("type", "2");
                 startActivityForResult(intent, UpdateContentActivity.REQUEST_CODE);
+            }
+        });
+    }
+
+    void setMenu() {
+        toolbar.inflateMenu(R.menu.menu_submit);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                int id = item.getItemId();
+                if (id == R.id.toolbar_submit) {
+                    //预览页面
+                    updateQuestionnaireItem();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("title", getIntent().getBundleExtra("bundle").getString("title"));
+                    bundle.putSerializable("questionnaireItem", questionnaireItem);
+                    jumpToNext(QuestionPreviewActivity.class, bundle);
+                    return true;
+                }
+                return false;
             }
         });
     }
@@ -181,6 +214,7 @@ public class EditQuestionActivity extends BaseActivity {
 
                             @Override
                             public void onCancelListener(EditText et) {
+                                iqcl_scroll_layout.smoothScrollBy(-MyUtil.toDip(70), 0);
                             }
                         }, true);
             }
@@ -194,7 +228,11 @@ public class EditQuestionActivity extends BaseActivity {
             public void onClick(View v) {
                 curUpdateView = view;
                 Intent intent = new Intent();
-                intent.setClass(EditQuestionActivity.this, CreateSelectionActivity.class);
+                if (TextUtils.equals("3", ((QuestionItem) view.getTag()).getType())) {
+                    intent.setClass(EditQuestionActivity.this, CreateBlankActivity.class);
+                }else{
+                    intent.setClass(EditQuestionActivity.this, CreateSelectionActivity.class);
+                }
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("questionItem", (QuestionItem) view.getTag());
                 intent.putExtra("bundle", bundle);
@@ -215,6 +253,17 @@ public class EditQuestionActivity extends BaseActivity {
         curUpdateView.setTag(questionItem);
         aqcl_tv_title.setText(questionItem.getTitle());
         aqcl_tv_type.setText(getTypeStr(questionItem.getType()));
+    }
+
+    /**
+     * 统计条目
+     */
+    private void updateQuestionnaireItem() {
+        ArrayList arrayList = new ArrayList();
+        for (int i = 0; i < aeql_ll_question_layout.getChildCount(); i++) {
+            arrayList.add(aeql_ll_question_layout.getChildAt(i).getTag());
+        }
+        questionnaireItem.setQuestionItemList(arrayList);
     }
 
     private void updateDateView() {

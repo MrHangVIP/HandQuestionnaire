@@ -17,6 +17,7 @@ import com.jyz.handquestionnaire.bean.QuestionItem;
 import com.jyz.handquestionnaire.bean.SelectionItem;
 import com.jyz.handquestionnaire.ui.widget.MMAlert;
 import com.jyz.handquestionnaire.ui.widget.WheelViewDialog;
+import com.jyz.handquestionnaire.util.MyUtil;
 import com.jyz.handquestionnaire.util.WheelUtil;
 import com.jyz.handquestionnaire.util.WheelViewDialogUtil;
 
@@ -67,7 +68,7 @@ public class CreateSelectionActivity extends BaseActivity {
         acsl_tv_select_more = (TextView) findViewById(R.id.acsl_tv_select_more);
         acsl_cb_must = (CheckBox) findViewById(R.id.acsl_cb_must);
         acsl_tv_create = (TextView) findViewById(R.id.acsl_tv_create);
-//        acsl_tv_selection_add.getCompoundDrawables()[0].setBounds(0, 0, MyUtil.toDip(20), MyUtil.toDip(20));
+        MyUtil.setCompoundDrawables(acsl_tv_selection_add, MyUtil.toDip(20), MyUtil.toDip(20), 0);
     }
 
     @Override

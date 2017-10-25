@@ -37,6 +37,8 @@
         <activity android:name=".ui.activity.EditQuestionActivity"/>
         <activity android:name=".ui.activity.CreateSelectionActivity"/>
         <activity android:name=".ui.activity.UpdateContentActivity"/>
+        <activity android:name=".ui.activity.QuestionPreviewActivity"/>
+        <activity android:name=".ui.activity.CreateBlankActivity"/>
     </application>
 
 </manifest>

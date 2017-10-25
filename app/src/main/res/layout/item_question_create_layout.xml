@@ -42,6 +42,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_toLeftOf="@+id/aqcl_tv_type"
                     android:layout_weight="1.0"
                     android:ellipsize="end"

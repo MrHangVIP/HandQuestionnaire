@@ -76,7 +76,7 @@ public class HomeFragment extends BaseFragment {
         fragments.add(hotFragment);
         fragments.add(newFragment);
         fragments.add(allFragment);
-        fhl_viewpager.setAdapter(new MyFragmentAdapter(getFragmentManager()));
+        fhl_viewpager.setAdapter(new MyFragmentAdapter(getChildFragmentManager()));
         fhl_viewpager.setCurrentItem(curIndex);
         updatePosition(0);
     }

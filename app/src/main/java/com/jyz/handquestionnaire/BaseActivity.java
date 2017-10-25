@@ -152,8 +152,9 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
      */
     protected void jumpToNext(Class<?> mClass, Bundle bundle, @AnimRes int resId) {
         Intent intent = new Intent(this, mClass);
-        if (bundle != null)
+        if (bundle != null){
             intent.putExtra("bundle", bundle);
+        }
         startActivity(intent);
         if (resId == 0) {
             overridePendingTransition(R.anim.slide_in_right, R.anim.anim_fade_out);

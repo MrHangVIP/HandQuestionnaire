@@ -87,6 +87,12 @@ public class QuestionnaireFragment extends BaseFragment implements SwipeRefreshL
         handler.sendEmptyMessageDelayed(refresh, 2000);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mRecyclerView.setAdapter(new QuestionAdapter(getActivity()));
+    }
+
     private void getData() {
 //        articleList.clear();
 //        ProgressDialogUtil.showProgressDialog(getActivity(), true);

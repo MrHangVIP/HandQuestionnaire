@@ -305,11 +305,11 @@
         <item name="android:windowBackground">@drawable/round_background</item>
     </style>
 
-    <!--悬浮窗-->
-    <style name="anim_view">
-        <item name="@android:windowEnterAnimation">@anim/anim_in</item>
-        <item name="@android:windowExitAnimation">@anim/anim_out</item>
-    </style>
+    <!--&lt;!&ndash;悬浮窗&ndash;&gt;-->
+    <!--<style name="anim_view">-->
+        <!--<item name="@android:windowEnterAnimation">@anim/anim_in</item>-->
+        <!--<item name="@android:windowExitAnimation">@anim/anim_out</item>-->
+    <!--</style>-->
 
     <style name="NotificationTitle" parent="android:TextAppearance.StatusBar.EventContent.Title" />
 
