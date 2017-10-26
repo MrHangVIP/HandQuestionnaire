@@ -10,13 +10,35 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        signingConfigs {
+            release {
+                //填写之前Eclipse-Build里面的默认路径
+                storeFile file("../handquestionnaire.keystore")
+                storePassword "handquestionnaire.keystore"
+                keyAlias "handquestionnaire.keystore"
+                keyPassword "handquestionnaire.keystore"
+//           qianming    aae52b0a64c8739e787897ba8eb71a67
+            }
+        }
     }
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
 }
 
 dependencies {
