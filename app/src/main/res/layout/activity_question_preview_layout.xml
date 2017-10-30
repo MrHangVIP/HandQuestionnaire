@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <include layout="@layout/toolbar" />
+
+        <LinearLayout
+            android:id="@+id/aqpl_ll_table_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/aqpl_tv_empty"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:text="您还没有创建问题,快去创建吧!"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="#235EAB"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/aqpl_tv_submit"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/submit_round_bg"
+            android:enabled="true"
+            android:gravity="center"
+            android:text="提交"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="带 * 为必填项"
+            android:textColor="#A1A1A1"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+</ScrollView>

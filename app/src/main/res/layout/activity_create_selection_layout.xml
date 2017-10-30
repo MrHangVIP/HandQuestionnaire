@@ -216,7 +216,6 @@
 
             </LinearLayout>
 
-
             <TextView
                 android:id="@+id/acsl_tv_create"
                 android:layout_width="match_parent"

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="#111111"
+            android:text="标题"/>
+
+        <EditText
+            android:id="@+id/acbl_et_title"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:textSize="18sp"
+            android:textColor="#333333"
+            android:background="@drawable/edittext_round_bg"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:padding="3dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="#FFFFFF"
+            android:padding="10dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:text="输入框行数"
+                android:textSize="16sp"
+                android:textColor="#333333"/>
+
+            <TextView
+                android:id="@+id/acbl_tv_lines"
+                android:paddingRight="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="1"
+                android:textSize="16sp"
+                android:textColor="#CCCCCC"
+                android:drawablePadding="5dp"
+                android:drawableRight="@drawable/icon_select_arraw"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="#FFFFFF"
+            android:padding="10dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:text="是否为必填"
+                android:textSize="16sp"
+                android:textColor="#111111"/>
+
+            <CheckBox
+                android:id="@+id/acbl_cb_must"
+                android:layout_width="47dp"
+                android:layout_height="21dp"
+                android:background="@drawable/switch_loadimg_selector"
+                android:button="@null"
+                android:checked="true"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/acbl_tv_create"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="确认"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:background="@drawable/submit_round_bg"
+            android:enabled="true"
+            android:layout_marginTop="20dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>
