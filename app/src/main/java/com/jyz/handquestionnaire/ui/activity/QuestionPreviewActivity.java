@@ -15,6 +15,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.jyz.handquestionnaire.BaseActivity;
+import com.jyz.handquestionnaire.BaseApplication;
 import com.jyz.handquestionnaire.R;
 import com.jyz.handquestionnaire.bean.QuestionItem;
 import com.jyz.handquestionnaire.bean.QuestionnaireItem;
@@ -247,6 +248,36 @@ public class QuestionPreviewActivity extends BaseActivity {
      * 发布
      */
     private void onSubmitAction(){
-
+//        OkHttpHelp<ResultItem> okHttpHelp=OkHttpHelp.getInstance();
+//        Map<String,String> params=new HashMap<>();
+//        UserItem userItem= BaseApplication.getAPPInstance().getmUser();
+//        params.put("userPhone",userItem.getUserPhone());
+//        params.put("token", SpfUtil.getString(Constant.TOKEN, ""));
+//        params.put("title",postBarItem.getTitle());
+//        params.put("content",postBarItem.getContent());
+//        params.put("imageUrl",imageUrl);
+//        params.put("order",postBarItem.getOrders());
+//        okHttpHelp.httpRequest("", Constant.WRITE_POSTBAR, params, new ResponseListener<ResultItem>() {
+//            @Override
+//            public void onSuccess(ResultItem object) {
+//                ProgressDialogUtil.dismissProgressdialog();
+//                if("success".equals(object.getResult())){
+//                    toast("发表成功");
+//                    goToNext(CommunicateActivity.class);
+//                }else{
+//                    toast("发表失败");
+//                }
+//            }
+//
+//            @Override
+//            public void onFailed(String message) {
+//                ProgressDialogUtil.dismissProgressdialog();
+//            }
+//
+//            @Override
+//            public Class<ResultItem> getEntityClass() {
+//                return ResultItem.class;
+//            }
+//        });
     }
 }
