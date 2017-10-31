@@ -30,12 +30,14 @@ import java.util.ArrayList;
 public class QuestionPreviewActivity extends BaseActivity {
     private static final String TAG = "QuestionPreviewActivity";
 
+    private TextView aqpl_ll_tv_introduce;
     private LinearLayout aqpl_ll_table_layout;
     private TextView aqpl_tv_empty;
     private TextView aqpl_tv_submit;
 
     private ArrayList<RadioButton> radioButtons = new ArrayList<>();
     private ArrayList<CheckBox> checkBoxes = new ArrayList<>();
+    private QuestionnaireItem questionnaireItem;
 
 
     @Override
@@ -45,6 +47,7 @@ public class QuestionPreviewActivity extends BaseActivity {
 
     @Override
     protected void findViews() {
+        aqpl_ll_tv_introduce = (TextView) findViewById(R.id.aqpl_ll_tv_introduce);
         aqpl_ll_table_layout = (LinearLayout) findViewById(R.id.aqpl_ll_table_layout);
         aqpl_tv_empty = (TextView) findViewById(R.id.aqpl_tv_empty);
         aqpl_tv_submit = (TextView) findViewById(R.id.aqpl_tv_submit);
@@ -53,8 +56,9 @@ public class QuestionPreviewActivity extends BaseActivity {
     @Override
     protected void initData() {
         String title = getIntent().getBundleExtra("bundle").getString("title");
-        QuestionnaireItem questionnaireItem = (QuestionnaireItem) getIntent().getBundleExtra("bundle").getSerializable("questionnaireItem");
+        questionnaireItem = (QuestionnaireItem) getIntent().getBundleExtra("bundle").getSerializable("questionnaireItem");
         setTitle(title);
+        aqpl_ll_tv_introduce.setText(questionnaireItem.getIntroduce());
         createContentView(questionnaireItem);
     }
 
@@ -64,6 +68,13 @@ public class QuestionPreviewActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        aqpl_tv_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }
@@ -159,6 +170,8 @@ public class QuestionPreviewActivity extends BaseActivity {
         if (!TextUtils.equals("不限", questionItem.getMore())) {
             selectionStr = (TextUtils.isEmpty(selectionStr) ? "" : selectionStr + ",") + "[最多选择" + questionItem.getMore() + "项]";
             more = Integer.parseInt(questionItem.getMore());
+        } else {
+            more = 100;
         }
         SpannableString contentStr = new SpannableString(textStr + mustStr + selectionStr);
         if (!TextUtils.isEmpty(mustStr)) {
@@ -228,5 +241,12 @@ public class QuestionPreviewActivity extends BaseActivity {
         lbs_et_answer.setMaxLines(Integer.parseInt(questionItem.getLines()));
         lbs_et_answer.setLines(Integer.parseInt(questionItem.getLines()));
         aqpl_ll_table_layout.addView(view);
+    }
+
+    /**
+     * 发布
+     */
+    private void onSubmitAction(){
+
     }
 }
