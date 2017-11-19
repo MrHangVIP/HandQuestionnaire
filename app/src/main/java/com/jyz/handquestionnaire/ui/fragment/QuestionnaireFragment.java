@@ -9,12 +9,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
 import com.jyz.handquestionnaire.BaseActivity;
 import com.jyz.handquestionnaire.BaseFragment;
 import com.jyz.handquestionnaire.R;
+import com.jyz.handquestionnaire.api.OkHttpHelp;
+import com.jyz.handquestionnaire.bean.QuestionnaireItem;
+import com.jyz.handquestionnaire.bean.ResultItem;
+import com.jyz.handquestionnaire.listener.ResponseListener;
 import com.jyz.handquestionnaire.ui.adapter.QuestionAdapter;
+import com.jyz.handquestionnaire.util.Constant;
+import com.jyz.handquestionnaire.util.ProgressDialogUtil;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,7 +40,7 @@ public class QuestionnaireFragment extends BaseFragment implements SwipeRefreshL
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
 
-    //    private List<ArticleItem> articleList = new ArrayList<>();
+    private List<QuestionnaireItem> questionnaireItemList = new ArrayList<>();
     private String type;//问卷类型 1最热,2最新,3所有
     private static final int refresh = 0x100;
 
@@ -56,7 +68,6 @@ public class QuestionnaireFragment extends BaseFragment implements SwipeRefreshL
     @Override
     protected void initView(View view) {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.fql_rv_recycleview);
-        mRecyclerView.setAdapter(new QuestionAdapter(getActivity()));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext()));
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.fql_sr_swiperefresh);
         swipeRefreshLayout.setOnRefreshListener(this);
@@ -68,7 +79,6 @@ public class QuestionnaireFragment extends BaseFragment implements SwipeRefreshL
     @Override
     protected void initData() {
         type = getArguments().getString("type");
-        getData();
     }
 
     @Override
@@ -84,53 +94,54 @@ public class QuestionnaireFragment extends BaseFragment implements SwipeRefreshL
     @Override
     public void onRefresh() {
         getData();
-        handler.sendEmptyMessageDelayed(refresh, 2000);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mRecyclerView.setAdapter(new QuestionAdapter(getActivity()));
+        onRefresh();
     }
 
     private void getData() {
-//        articleList.clear();
-//        ProgressDialogUtil.showProgressDialog(getActivity(), true);
         Map<String, String> map = new HashMap<>();
         map.put("type", type);
-//        OkHttpHelp<ResultItem> httpHelp = OkHttpHelp.getInstance();
-//        httpHelp.httpRequest("", Constant.GET_TYPE_ARTICLE, map, new ResponseListener<ResultItem>() {
-//            @Override
-//            public void onSuccess(ResultItem object) {
-//                ProgressDialogUtil.dismissProgressdialog();
-//                if (object.getResult().equals("success")) {
-//                    try {
-//                        JSONArray jsonArray = new JSONArray(object.getData());
-//                        for (int i = 0; i < jsonArray.length(); i++) {
-//                            ArticleItem articleItem = new Gson().fromJson(jsonArray.get(i).toString(), ArticleItem.class);
-//                            articleList.add(articleItem);
-//                        }
-//
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                        MyUtil.MyLogE(TAG, e.toString());
-//                    }
-//                    mRecyclerView.setAdapter(new HomeArticleAdapter(getActivity(), articleList, ""));
-//                    if (getActivity() != null && swipeRefreshLayout.isRefreshing()) {
-//                        swipeRefreshLayout.setRefreshing(false);
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailed(String message) {
-//                ProgressDialogUtil.dismissProgressdialog();
-//            }
-//
-//            @Override
-//            public Class<ResultItem> getEntityClass() {
-//                return ResultItem.class;
-//            }
-//        });
+        ProgressDialogUtil.showProgressDialog(getActivity(), true);
+        OkHttpHelp<ResultItem> okHttpHelp = OkHttpHelp.getInstance();
+        okHttpHelp.httpRequest("", Constant.GET_QUESTIONNAIRELIST, map, new ResponseListener<ResultItem>() {
+            @Override
+            public void onSuccess(ResultItem object) {
+                swipeRefreshLayout.setRefreshing(false);
+                ProgressDialogUtil.dismissProgressdialog();
+                if ("fail".equals(object.getResult())) {
+                    toast("网络错误，请重试！");
+                    return;
+                }
+//                handler.sendEmptyMessage(refresh);
+                JSONArray jsonArray = null;
+                questionnaireItemList.clear();
+                try {
+                    jsonArray = new JSONArray(object.getData());
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        QuestionnaireItem postBarItem = new Gson().fromJson(jsonArray.get(i).toString(), QuestionnaireItem.class);
+                        questionnaireItemList.add(postBarItem);
+                    }
+                    mRecyclerView.setAdapter(new QuestionAdapter(getActivity(), questionnaireItemList));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailed(String message) {
+                ProgressDialogUtil.dismissProgressdialog();
+                swipeRefreshLayout.setRefreshing(false);
+                toast("网络错误，请重试！");
+            }
+
+            @Override
+            public Class<ResultItem> getEntityClass() {
+                return ResultItem.class;
+            }
+        });
     }
 }

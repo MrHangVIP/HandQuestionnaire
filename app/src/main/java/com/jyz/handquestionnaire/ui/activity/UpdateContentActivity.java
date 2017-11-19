@@ -1,6 +1,7 @@
 package com.jyz.handquestionnaire.ui.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -28,6 +29,12 @@ public class UpdateContentActivity extends BaseActivity {
 
     private String type;
     private QuestionnaireItem questionnaireItem;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        createActivityList.add(this);
+    }
 
     @Override
     protected void setView() {
@@ -94,5 +101,11 @@ public class UpdateContentActivity extends BaseActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        createActivityList.remove(this);
     }
 }

@@ -8,7 +8,7 @@ import android.view.WindowManager;
 
 public class Constant {
 
-    public static final String DEFAULT_URL="http://192.168.1.100:8080/ZSXBiShe";
+    public static final String DEFAULT_URL="http://192.168.0.106:8080/JYZBiShe";
 
     public static final String IMAGE_URL="/image/";
 
@@ -19,22 +19,13 @@ public class Constant {
     public static final String IMAGE_UPLOAD_URL="/ImageUpload";
     public static final String UPDATE_HEAD_URL="/UpdateHeadUrl";
 
-    public static final String GET_RANDOM_ARTICLE="/GetRandomArticle";
-    public static final String GET_TYPE_ARTICLE="/GetTypeArticle";
-    public static final String WRITE_POSTBAR="/WritePostBar";
-    public static final String GET_POSTBAR="/GetPostList";
-    public static final String LIKE_POSTBAR="/LikePostbar";
-    public static final String WRITE_COMMENT="/WriteComment";
-    public static final String GET_COMMENT="/GetCommentList";
-
-
+    public static final String CREATE_QUESTIONNAIRE="/CreateQuestionnaire";
+    public static final String GET_QUESTIONNAIRELIST="/GetQuestionnaireList";
 
     public static final int IMAGE_UPLOAD_OK=0x1000;
     public static final int IMAGE_UPLOAD_FAIL=0x1001;
 
     //-------本地sharedpreference的key开始----------
-
-    public static final String MUM_STATE="mum_state";
 
     public static final String IS_LOGIN="is_login";
 
@@ -50,7 +41,7 @@ public class Constant {
     //分隔符
     public static final String MY_SPLIT_STR="<&;&>";
 
-//    public static final String MacAddress=MyUtil.getMac();
+    public static final String MacAddress=MyUtil.getMac();
 
     //获取屏幕的宽度
     public static int getScreenWidth(Context context) {

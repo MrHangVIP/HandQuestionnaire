@@ -20,7 +20,7 @@ public class QuestionItem implements Serializable{
 
     private String type;//类型 1,单选,2多选,3填空
 
-    private String lines;//行数 填空
+    private String line;//行数 填空
 
     private String least;//最少选项
 
@@ -70,12 +70,12 @@ public class QuestionItem implements Serializable{
         this.type = type;
     }
 
-    public String getLines() {
-        return lines;
+    public String getLine() {
+        return line;
     }
 
-    public void setLines(String lines) {
-        this.lines = lines;
+    public void setLine(String line) {
+        this.line = line;
     }
 
     public String getLeast() {

@@ -25,6 +25,12 @@ public class CreateQuestionActivity extends BaseActivity {
     private TextView acql_tv_submit;
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        createActivityList.add(this);
+    }
+
+    @Override
     protected void setView() {
         setContentView(R.layout.activity_create_question_layout);
     }
@@ -74,5 +80,11 @@ public class CreateQuestionActivity extends BaseActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        createActivityList.remove(this);
     }
 }

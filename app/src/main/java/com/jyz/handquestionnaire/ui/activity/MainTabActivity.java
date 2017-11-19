@@ -9,17 +9,31 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.google.gson.Gson;
 import com.jyz.handquestionnaire.BaseActivity;
+import com.jyz.handquestionnaire.BaseApplication;
 import com.jyz.handquestionnaire.R;
+import com.jyz.handquestionnaire.api.OkHttpHelp;
+import com.jyz.handquestionnaire.bean.ResultItem;
+import com.jyz.handquestionnaire.bean.UserItem;
 import com.jyz.handquestionnaire.library.DefaultAnimationHandler2;
 import com.jyz.handquestionnaire.library.FloatingActionMenu;
 import com.jyz.handquestionnaire.library.MenuAnimationHandler2;
+import com.jyz.handquestionnaire.listener.ResponseListener;
 import com.jyz.handquestionnaire.ui.fragment.HomeFragment;
 import com.jyz.handquestionnaire.ui.fragment.UserCenterFragment;
+import com.jyz.handquestionnaire.util.Constant;
 import com.jyz.handquestionnaire.util.MyUtil;
+import com.jyz.handquestionnaire.util.ProgressDialogUtil;
+import com.jyz.handquestionnaire.util.SpfUtil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -73,6 +87,13 @@ public class MainTabActivity extends BaseActivity {
         aml_translate_bg.setOnClickListener(this);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (SpfUtil.getBoolean(Constant.IS_LOGIN, false)) {//已登陆获取用户信息
+            getUserData();
+        }
+    }
 
     @Override
     public void onClick(View v) {
@@ -119,8 +140,14 @@ public class MainTabActivity extends BaseActivity {
                 rlIcon.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        jumpToNext(CreateQuestionActivity.class);
-                        closeWindow();
+                        if(SpfUtil.getBoolean(Constant.IS_LOGIN, false)){
+                            jumpToNext(CreateQuestionActivity.class);
+                            closeWindow();
+                        }else{
+                            toast("请先登陆");
+                            jumpToNext(LoginActivity.class);
+                            closeWindow();
+                        }
                     }
                 });
             }
@@ -176,5 +203,46 @@ public class MainTabActivity extends BaseActivity {
             aml_iv_left.setImageResource(R.drawable.icon_shouye_normal);
             aml_iv_right.setImageResource(R.drawable.icon_mime_press);
         }
+    }
+
+    private void getUserData() {
+        Map<String, String> params = new HashMap<>();
+        params.put("token", SpfUtil.getString(Constant.TOKEN, ""));
+        params.put("userPhone", SpfUtil.getString(Constant.LOGIN_USERPHONE, ""));
+        OkHttpHelp<ResultItem> httpHelp = OkHttpHelp.getInstance();
+        httpHelp.httpRequest("", Constant.GET_USER_URL, params, new ResponseListener<ResultItem>() {
+                    @Override
+                    public void onSuccess(ResultItem object) {
+                        if ("fail".equals(object.getResult())) {
+                            if ("token error".equals(object.getData())) {
+                                toast("token失效,请重新登录");
+                                tokenError();
+                            }
+                        } else {
+                            JSONObject userJson = null;
+                            try {
+                                userJson = new JSONObject(object.getData());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            UserItem userItem = (new Gson()).fromJson(userJson.toString(), UserItem.class);
+                            UserItem mUser = userItem;
+                            ProgressDialogUtil.dismissProgressdialog();
+                            BaseApplication.getAPPInstance().setmUser(userItem);
+                        }
+                    }
+
+                    @Override
+                    public void onFailed(String message) {
+                        ProgressDialogUtil.dismissProgressdialog();
+                    }
+
+                    @Override
+                    public Class getEntityClass() {
+                        return ResultItem.class;
+                    }
+                }
+
+        );
     }
 }

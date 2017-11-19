@@ -10,7 +10,17 @@ import android.widget.EditText;
 
 import com.jyz.handquestionnaire.BaseFragment;
 import com.jyz.handquestionnaire.R;
+import com.jyz.handquestionnaire.api.OkHttpHelp;
+import com.jyz.handquestionnaire.bean.ResultItem;
+import com.jyz.handquestionnaire.listener.ResponseListener;
+import com.jyz.handquestionnaire.ui.activity.LoginActivity;
+import com.jyz.handquestionnaire.util.Constant;
+import com.jyz.handquestionnaire.util.ProgressDialogUtil;
+import com.jyz.handquestionnaire.util.SpfUtil;
 import com.jyz.handquestionnaire.util.StringUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -73,39 +83,38 @@ public class RegistFragment extends BaseFragment {
                     registFail();
                     break;
                 }
-//                ProgressDialogUtil.showProgressDialog(getActivity(),true);
-//                Map<String,String> params=new HashMap<>();
-//                params.put("userPhone",username);
-//                params.put("userPass",userpass);
-//                params.put("status", SpfUtil.getString(Constant.MUM_STATE,"prepared"));
-//                OkHttpHelp<ResultItem> httpHelp= OkHttpHelp.getInstance();
-//                httpHelp.httpRequest("post",Constant.REGIST_URL, params, new ResponseListener<ResultItem>() {
-//                    @Override
-//                    public void onSuccess(ResultItem object) {
-//                        ProgressDialogUtil.dismissProgressdialog();
-//                        if(object.getResult().equals("success")){
-//                            toast("注册成功,请登录！");
-//                            ((LoginActivity)getActivity()).tabFragment();
-//                        }else{
-//                            if(object.getData()!=null && object.getData().equals("exist")){
-//                                toast("该手机已经注册请登录");
-//                            }else{
-//                                toast("注册失败");
-//                            }
-//                        }
-//                        registFail();
-//                    }
-//
-//                    @Override
-//                    public void onFailed(String message) {
-//                        ProgressDialogUtil.dismissProgressdialog();
-//                    }
-//
-//                    @Override
-//                    public Class<ResultItem> getEntityClass() {
-//                        return ResultItem.class;
-//                    }
-//                });
+                ProgressDialogUtil.showProgressDialog(getActivity(),true);
+                Map<String,String> params=new HashMap<>();
+                params.put("userPhone",username);
+                params.put("userPass",userpass);
+                OkHttpHelp<ResultItem> httpHelp= OkHttpHelp.getInstance();
+                httpHelp.httpRequest("post", Constant.REGIST_URL, params, new ResponseListener<ResultItem>() {
+                    @Override
+                    public void onSuccess(ResultItem object) {
+                        ProgressDialogUtil.dismissProgressdialog();
+                        if(object.getResult().equals("success")){
+                            toast("注册成功,请登录！");
+                            ((LoginActivity)getActivity()).tabFragment();
+                        }else{
+                            if(object.getData()!=null && object.getData().equals("exist")){
+                                toast("该手机已经注册请登录");
+                            }else{
+                                toast("注册失败");
+                            }
+                        }
+                        registFail();
+                    }
+
+                    @Override
+                    public void onFailed(String message) {
+                        ProgressDialogUtil.dismissProgressdialog();
+                    }
+
+                    @Override
+                    public Class<ResultItem> getEntityClass() {
+                        return ResultItem.class;
+                    }
+                });
 
                 break;
 

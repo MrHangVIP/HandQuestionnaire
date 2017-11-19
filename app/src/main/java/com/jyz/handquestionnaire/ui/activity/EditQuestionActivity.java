@@ -49,6 +49,12 @@ public class EditQuestionActivity extends BaseActivity {
     private QuestionnaireItem questionnaireItem;
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        createActivityList.add(this);
+    }
+
+    @Override
     protected void setView() {
         setContentView(R.layout.activity_edit_question_layout);
     }
@@ -310,4 +316,9 @@ public class EditQuestionActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        createActivityList.remove(this);
+    }
 }

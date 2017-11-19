@@ -21,26 +21,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="问卷说明："
-                android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
                 android:textSize="18sp"/>
 
-            <EditText
-                android:id="@+id/aqpl_et_introduce"
+            <TextView
+                android:id="@+id/aqal_tv_introduce"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="请输入问卷说明"
-                android:background="@drawable/edittext_round_bg"
-                android:gravity="top|left"
-                android:minLines="2"
-                android:maxLines="6"
+                android:background="@drawable/round_background_white"
                 android:padding="5dp"
                 android:layout_marginTop="10dp"
                 android:textColor="#111111"
                 android:textSize="15sp" />
 
             <LinearLayout
-                android:id="@+id/aqpl_ll_table_layout"
+                android:id="@+id/aqal_ll_table_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -49,17 +45,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/aqpl_tv_empty"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:gravity="center"
-                android:text="您还没有创建问题,快去创建吧!"
-                android:textColor="#235EAB"
-                android:textSize="18sp"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/aqpl_tv_submit"
+                android:id="@+id/aqal_tv_submit"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center_horizontal"

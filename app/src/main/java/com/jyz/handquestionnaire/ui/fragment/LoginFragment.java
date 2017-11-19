@@ -7,10 +7,26 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.jyz.handquestionnaire.BaseActivity;
+import com.jyz.handquestionnaire.BaseApplication;
 import com.jyz.handquestionnaire.BaseFragment;
 import com.jyz.handquestionnaire.R;
+import com.jyz.handquestionnaire.api.OkHttpHelp;
+import com.jyz.handquestionnaire.bean.ResultItem;
+import com.jyz.handquestionnaire.bean.UserItem;
+import com.jyz.handquestionnaire.listener.ResponseListener;
 import com.jyz.handquestionnaire.ui.activity.ForgetPassActivity;
+import com.jyz.handquestionnaire.util.Constant;
+import com.jyz.handquestionnaire.util.ProgressDialogUtil;
+import com.jyz.handquestionnaire.util.SpfUtil;
 import com.jyz.handquestionnaire.util.StringUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @discription 登录fragment
@@ -71,47 +87,46 @@ public class LoginFragment extends BaseFragment {
                     loginFail();
                     break;
                 }
-//                ProgressDialogUtil.showProgressDialog(getActivity(), true);
-//                Map<String, String> params = new HashMap<>();
-//                params.put("userPhone", username);
-//                params.put("userPass", userpass);
-//                params.put("MAC",Constant.MacAddress);
-//                OkHttpHelp<ResultItem> httpHelp = OkHttpHelp.getInstance();
-//                httpHelp.httpRequest("post", Constant.LOGIN_URL, params, new ResponseListener<ResultItem>() {
-//                    @Override
-//                    public void onSuccess(ResultItem object) {
-//                        ProgressDialogUtil.dismissProgressdialog();
-//                        if (!object.getResult().equals("fail")) {
-//                            toast("登录成功！");
-//                            SpfUtil.saveString(Constant.TOKEN,object.getResult());
-//                            JSONObject userJson = null;
-//                            try {
-//                                userJson = new JSONObject(object.getData());
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//                            UserItem userItem = (new Gson()).fromJson(userJson.toString(), UserItem.class);
-//                            BaseApplication.getAPPInstance().setmUser(userItem);
-//                            SpfUtil.saveBoolean(Constant.IS_LOGIN, true);
-//                            SpfUtil.saveString(Constant.LOGIN_USERPHONE,userItem.getUserPhone());
-////                            getActivity().setResult(SettingActivity.RESULT_LOGIN);
-//                            ((BaseActivity)getActivity()).goToNext(SettingActivity.class);
-//                        } else {
-//                            toast("用户名或密码错误");
-//                            loginFail();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailed(String message) {
-//                        ProgressDialogUtil.dismissProgressdialog();
-//                    }
-//
-//                    @Override
-//                    public Class<ResultItem> getEntityClass() {
-//                        return ResultItem.class;
-//                    }
-//                });
+                ProgressDialogUtil.showProgressDialog(getActivity(), true);
+                Map<String, String> params = new HashMap<>();
+                params.put("userPhone", username);
+                params.put("userPass", userpass);
+                params.put("MAC",Constant.MacAddress);
+                OkHttpHelp<ResultItem> httpHelp = OkHttpHelp.getInstance();
+                httpHelp.httpRequest("post", Constant.LOGIN_URL, params, new ResponseListener<ResultItem>() {
+                    @Override
+                    public void onSuccess(ResultItem object) {
+                        ProgressDialogUtil.dismissProgressdialog();
+                        if (!object.getResult().equals("fail")) {
+                            toast("登录成功！");
+                            SpfUtil.saveString(Constant.TOKEN,object.getResult());
+                            JSONObject userJson = null;
+                            try {
+                                userJson = new JSONObject(object.getData());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            UserItem userItem = (new Gson()).fromJson(userJson.toString(), UserItem.class);
+                            BaseApplication.getAPPInstance().setmUser(userItem);
+                            SpfUtil.saveBoolean(Constant.IS_LOGIN, true);
+                            SpfUtil.saveString(Constant.LOGIN_USERPHONE,userItem.getUserPhone());
+                            getActivity().finish();
+                        } else {
+                            toast("用户名或密码错误");
+                            loginFail();
+                        }
+                    }
+
+                    @Override
+                    public void onFailed(String message) {
+                        ProgressDialogUtil.dismissProgressdialog();
+                    }
+
+                    @Override
+                    public Class<ResultItem> getEntityClass() {
+                        return ResultItem.class;
+                    }
+                });
 
                 break;
 
@@ -130,5 +145,4 @@ public class LoginFragment extends BaseFragment {
         phoneNumberET.requestFocus();
         passwordET.setText("");
     }
-
 }

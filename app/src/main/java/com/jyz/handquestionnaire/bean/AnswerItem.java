@@ -21,7 +21,11 @@ public class AnswerItem implements Serializable{
 
     private String createTime;
 
+    private int selectionId;
+
     private long createTimeStmp;//时间戳
+
+    private String type;//问题类型
 
     public int getAnswerId() {
         return answerId;
@@ -71,11 +75,27 @@ public class AnswerItem implements Serializable{
         this.createTime = createTime;
     }
 
+    public int getSelectionId() {
+        return selectionId;
+    }
+
+    public void setSelectionId(int selectionId) {
+        this.selectionId = selectionId;
+    }
+
     public long getCreateTimeStmp() {
         return createTimeStmp;
     }
 
     public void setCreateTimeStmp(long createTimeStmp) {
         this.createTimeStmp = createTimeStmp;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

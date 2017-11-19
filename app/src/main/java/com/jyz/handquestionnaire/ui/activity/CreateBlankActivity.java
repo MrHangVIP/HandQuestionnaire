@@ -1,6 +1,7 @@
 package com.jyz.handquestionnaire.ui.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
@@ -29,6 +30,11 @@ public class CreateBlankActivity extends BaseActivity {
     private TextView acbl_tv_create;
     private WheelViewDialog selectionDialog;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        createActivityList.add(this);
+    }
 
     @Override
     protected void setView() {
@@ -91,7 +97,7 @@ public class CreateBlankActivity extends BaseActivity {
                 QuestionItem item = new QuestionItem();
                 item.setType("3");
                 item.setTitle(title);
-                item.setLines(acbl_tv_lines.getText().toString());
+                item.setLine(acbl_tv_lines.getText().toString());
                 item.setIsMust(acbl_cb_must.isChecked() ? "1" : "0");
                 Intent intent = new Intent();
                 intent.putExtra("questionItem", item);
@@ -107,6 +113,12 @@ public class CreateBlankActivity extends BaseActivity {
     private void setDateToView(QuestionItem questionItem) {
         acbl_et_title.setText(questionItem.getTitle());
         acbl_cb_must.setChecked(TextUtils.equals("1", questionItem.getIsMust()));
-        acbl_tv_lines.setText(questionItem.getLines());
+        acbl_tv_lines.setText(questionItem.getLine());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        createActivityList.remove(this);
     }
 }

@@ -29,6 +29,8 @@ public class UserItem {
 
     private String headUrl;
 
+    private int score;//个人积分
+
     public int getUserId() {
         return userId;
     }
@@ -115,5 +117,13 @@ public class UserItem {
 
     public void setHeadUrl(String headUrl) {
         this.headUrl = headUrl;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }
