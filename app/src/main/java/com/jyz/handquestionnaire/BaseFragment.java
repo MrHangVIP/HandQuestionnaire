@@ -18,6 +18,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jyz.handquestionnaire.ui.activity.LoginActivity;
+import com.jyz.handquestionnaire.util.SpfUtil;
+
 
 /**
  * Created by moram on 2016/9/21.
@@ -186,5 +189,12 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         getActivity().overridePendingTransition(resId, 0);
     }
 
-
+    /**
+     * token失效
+     */
+    public void tokenError(){
+        BaseApplication.getAPPInstance().setmUser(null);
+        SpfUtil.clearAll();
+        jumpToNext(LoginActivity.class);
+    }
 }

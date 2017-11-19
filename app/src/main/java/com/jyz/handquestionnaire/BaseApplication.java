@@ -2,20 +2,21 @@ package com.jyz.handquestionnaire;
 
 import android.app.Application;
 
+import com.jyz.handquestionnaire.bean.UserItem;
 import com.jyz.handquestionnaire.util.SpfUtil;
 
 /**
  * Created by Songzhihang on 2017/10/5.
  */
-public class BaseApplication extends Application{
+public class BaseApplication extends Application {
 
     private static BaseApplication instance;
 
-    public static BaseApplication getAPPInstance(){
+    public static BaseApplication getAPPInstance() {
         return instance;
     }
 
-//    private UserItem mUser;
+    private UserItem mUser;
 //
 //    private static List<EmojiItem> emojiItemList=new ArrayList<>();
 //
@@ -29,10 +30,18 @@ public class BaseApplication extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
-        instance=this;
+        instance = this;
         //初始化缓存
         SpfUtil.init(this);
 //        Config.DEBUG = true;
 //        UMShareAPI.get(this);
+    }
+
+    public UserItem getmUser() {
+        return mUser;
+    }
+
+    public void setmUser(UserItem mUser) {
+        this.mUser = mUser;
     }
 }

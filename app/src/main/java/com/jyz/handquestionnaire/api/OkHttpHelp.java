@@ -51,16 +51,11 @@ public class OkHttpHelp<T> {
 
 
     public void httpRequest(String method, String url, Map<String, String> params, final ResponseListener<T> listener) {
-        if ("".equals(url)) {
-            url = "http://v.juhe.cn/toutiao/index?type=top&key=29f7ddf45497b0382427bf8759b9f1a1";
+        if (url == null) {
+            url = Constant.DEFAULT_URL;
         } else {
-            if (url == null) {
-                url = Constant.DEFAULT_URL;
-            } else {
-                url = Constant.DEFAULT_URL + url;
-            }
+            url = Constant.DEFAULT_URL + url;
         }
-
         RequestBody formBody = null;
         if (params != null) {
             FormBody.Builder builder = new FormBody.Builder();

@@ -14,7 +14,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jyz.handquestionnaire.ui.activity.LoginActivity;
+import com.jyz.handquestionnaire.ui.activity.MainTabActivity;
 import com.jyz.handquestionnaire.util.MyUtil;
+import com.jyz.handquestionnaire.util.SpfUtil;
 
 import java.util.LinkedList;
 
@@ -29,7 +32,11 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     /**
      * 管理activity栈空间
      */
-    private LinkedList<BaseActivity> activityList = new LinkedList<BaseActivity>();
+    private static LinkedList<BaseActivity> activityList = new LinkedList<BaseActivity>();
+    /**
+     * 创建问卷相关页面管理
+     */
+    protected static LinkedList<BaseActivity> createActivityList = new LinkedList<BaseActivity>();
 
     protected Toolbar toolbar;
 
@@ -224,11 +231,15 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     /**
      * token失效
      */
-//    public void tokenError(){
-//        BaseApplication.getAPPInstance().setmUser(null);
-//        SpfUtil.clearAll();
-//        goToNext(LoginActivity.class);
-//    }
+    public void tokenError(){
+        BaseApplication.getAPPInstance().setmUser(null);
+        SpfUtil.clearAll();
+        if(this instanceof MainTabActivity){
+            jumpToNext(LoginActivity.class);
+        }else{
+            goToNext(LoginActivity.class);
+        }
+    }
     @Override
     public void onClick(View v) {
 

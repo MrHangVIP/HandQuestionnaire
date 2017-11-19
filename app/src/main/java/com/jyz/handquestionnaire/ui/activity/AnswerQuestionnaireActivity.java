@@ -2,13 +2,14 @@ package com.jyz.handquestionnaire.ui.activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Selection;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -16,11 +17,11 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.jyz.handquestionnaire.BaseActivity;
 import com.jyz.handquestionnaire.BaseApplication;
 import com.jyz.handquestionnaire.R;
 import com.jyz.handquestionnaire.api.OkHttpHelp;
+import com.jyz.handquestionnaire.bean.AnswerItem;
 import com.jyz.handquestionnaire.bean.QuestionItem;
 import com.jyz.handquestionnaire.bean.QuestionnaireItem;
 import com.jyz.handquestionnaire.bean.ResultItem;
@@ -28,85 +29,64 @@ import com.jyz.handquestionnaire.bean.SelectionItem;
 import com.jyz.handquestionnaire.bean.UserItem;
 import com.jyz.handquestionnaire.listener.ResponseListener;
 import com.jyz.handquestionnaire.util.Constant;
+import com.jyz.handquestionnaire.util.MyUtil;
 import com.jyz.handquestionnaire.util.ProgressDialogUtil;
-import com.jyz.handquestionnaire.util.SpfUtil;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @discription 预览页面
+ * @discription 回答问卷页面
  * @autor songzhihang
- * @time 2017/10/25  下午4:50
+ * @time 2017/11/19  下午4:50
  **/
-public class QuestionPreviewActivity extends BaseActivity {
-    private static final String TAG = "QuestionPreviewActivity";
+public class AnswerQuestionnaireActivity extends BaseActivity {
+    private static final String TAG = "AnswerQuestionnaireActivity";
 
-    private TextView aqpl_ll_tv_introduce;
-    private LinearLayout aqpl_ll_table_layout;
-    private TextView aqpl_tv_empty;
-    private EditText aqpl_et_introduce;
-    private TextView aqpl_tv_submit;
+    private LinearLayout aqal_ll_table_layout;
+    private TextView aqal_tv_introduce;
+    private TextView aqal_tv_submit;
 
     private ArrayList<RadioButton> radioButtons = new ArrayList<>();
     private ArrayList<CheckBox> checkBoxes = new ArrayList<>();
+    private ArrayList<EditText> editTexts = new ArrayList<>();
     private QuestionnaireItem questionnaireItem;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        createActivityList.add(this);
-    }
-
-    @Override
     protected void setView() {
-        setContentView(R.layout.activity_question_preview_layout);
+        setContentView(R.layout.activity_question_answer_layout);
     }
 
     @Override
     protected void findViews() {
-        aqpl_ll_tv_introduce = (TextView) findViewById(R.id.aqpl_ll_tv_introduce);
-        aqpl_ll_table_layout = (LinearLayout) findViewById(R.id.aqpl_ll_table_layout);
-        aqpl_tv_empty = (TextView) findViewById(R.id.aqpl_tv_empty);
-        aqpl_et_introduce = (EditText) findViewById(R.id.aqpl_et_introduce);
-        aqpl_tv_submit = (TextView) findViewById(R.id.aqpl_tv_submit);
+        aqal_ll_table_layout = (LinearLayout) findViewById(R.id.aqal_ll_table_layout);
+        aqal_tv_introduce = (TextView) findViewById(R.id.aqal_tv_introduce);
+        aqal_tv_submit = (TextView) findViewById(R.id.aqal_tv_submit);
     }
 
     @Override
     protected void initData() {
-        String title = getIntent().getBundleExtra("bundle").getString("title");
         questionnaireItem = (QuestionnaireItem) getIntent().getBundleExtra("bundle").getSerializable("questionnaireItem");
+        String title = questionnaireItem.getTitle();
         setTitle(title);
-        aqpl_ll_tv_introduce.setText(questionnaireItem.getIntroduce());
         createContentView(questionnaireItem);
     }
 
     @Override
     protected void setListener() {
-        aqpl_tv_empty.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        aqpl_tv_submit.setOnClickListener(new View.OnClickListener() {
+        aqal_tv_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                questionnaireItem.setIntroduce(aqpl_et_introduce.getText().toString());
                 onSubmitAction();
             }
         });
     }
 
     private void createContentView(QuestionnaireItem questionnaireItem) {
-        if(questionnaireItem!=null && !TextUtils.isEmpty(questionnaireItem.getIntroduce())){
-            aqpl_et_introduce.setText(questionnaireItem.getIntroduce());
+        if (!TextUtils.isEmpty(questionnaireItem.getIntroduce())) {
+            aqal_tv_introduce.setText(questionnaireItem.getIntroduce());
         }
         if (questionnaireItem != null && questionnaireItem.getQuestionItemList() != null && questionnaireItem.getQuestionItemList().size() != 0) {
             for (int i = 0; i < questionnaireItem.getQuestionItemList().size(); i++) {
@@ -122,8 +102,6 @@ public class QuestionPreviewActivity extends BaseActivity {
                     addBlankView(questionItem, i);
                 }
             }
-        } else {
-            aqpl_tv_empty.setVisibility(View.VISIBLE);
         }
     }
 
@@ -137,7 +115,7 @@ public class QuestionPreviewActivity extends BaseActivity {
         View view = LayoutInflater.from(mContext).inflate(R.layout.layout_single_selection, null);
         TextView lss_tv_num = (TextView) view.findViewById(R.id.lss_tv_num);
         LinearLayout lss_ll_table_layout = (LinearLayout) view.findViewById(R.id.lss_ll_table_layout);
-        String textStr = (position + 1) + ". " + questionItem.getTitle();
+        String textStr = (position + 1) + "（单选题）. " + questionItem.getTitle();
         if (TextUtils.equals("1", questionItem.getIsMust())) {
             textStr = textStr + " * ";
             SpannableString contentStr = new SpannableString(textStr);
@@ -146,8 +124,17 @@ public class QuestionPreviewActivity extends BaseActivity {
             lss_tv_num.setText(contentStr);
         }
         if (questionItem.getSelectionItemList() != null) {
+            int count=0;
             for (SelectionItem selectionItem : questionItem.getSelectionItemList()) {
+                count++;
+                final AnswerItem answerItem=new AnswerItem();
+                answerItem.setQuestionnaireId(questionnaireItem.getQuestionnaireId());
+                answerItem.setQuestionId(questionItem.getQuestionId());
+                answerItem.setSelectionId(selectionItem.getSelectionId());
+                answerItem.setAnswer(count+"");
+                count++;
                 final RadioButton radioButton = new RadioButton(mContext);
+                radioButton.setTag(answerItem);
                 radioButton.setText(selectionItem.getTitle());
                 if (selectionItem.getIsSelect() != null && TextUtils.equals("1", selectionItem.getIsSelect())) {
                     radioButton.setChecked(true);
@@ -165,10 +152,21 @@ public class QuestionPreviewActivity extends BaseActivity {
                     }
                 });
                 radioButtons.add(radioButton);
-                lss_ll_table_layout.addView(radioButton);
+                LinearLayout linearLayout=new LinearLayout(mContext);
+                linearLayout.setGravity(Gravity.CENTER_VERTICAL);
+                linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+                TextView textView=new TextView(mContext);
+                textView.setText(count+". ");
+                textView.setTextSize(16);
+                textView.setTextColor(Color.parseColor("#333333"));
+                LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.rightMargin= MyUtil.toDip(5);
+                linearLayout.addView(textView,params);
+                linearLayout.addView(radioButton);
+                lss_ll_table_layout.addView(linearLayout);
             }
         }
-        aqpl_ll_table_layout.addView(view);
+        aqal_ll_table_layout.addView(view);
     }
 
     /**
@@ -182,7 +180,7 @@ public class QuestionPreviewActivity extends BaseActivity {
         TextView lss_tv_num = (TextView) view.findViewById(R.id.lss_tv_num);
         LinearLayout lss_ll_table_layout = (LinearLayout) view.findViewById(R.id.lss_ll_table_layout);
         final TextView lss_tv_notice = (TextView) view.findViewById(R.id.lss_tv_notice);
-        String textStr = (position + 1) + ". " + questionItem.getTitle();
+        String textStr = (position + 1) + "（多选题）. " + questionItem.getTitle();
         String mustStr = "";
         if (TextUtils.equals("1", questionItem.getIsMust())) {
             mustStr = " * ";
@@ -198,8 +196,6 @@ public class QuestionPreviewActivity extends BaseActivity {
         if (!TextUtils.equals("不限", questionItem.getMore())) {
             selectionStr = (TextUtils.isEmpty(selectionStr) ? "" : selectionStr + ",") + "[最多选择" + questionItem.getMore() + "项]";
             more = Integer.parseInt(questionItem.getMore());
-        } else {
-            more = 100;
         }
         SpannableString contentStr = new SpannableString(textStr + mustStr + selectionStr);
         if (!TextUtils.isEmpty(mustStr)) {
@@ -213,8 +209,16 @@ public class QuestionPreviewActivity extends BaseActivity {
         lss_tv_num.setText(contentStr);
         final int moreNum = more;
         if (questionItem.getSelectionItemList() != null) {
-            for (SelectionItem selectionItem : questionItem.getSelectionItemList()) {
+            int count = 0;
+            for (final SelectionItem selectionItem : questionItem.getSelectionItemList()) {
+                final AnswerItem answerItem=new AnswerItem();
+                answerItem.setQuestionnaireId(questionnaireItem.getQuestionnaireId());
+                answerItem.setQuestionId(questionItem.getQuestionId());
+                answerItem.setSelectionId(selectionItem.getSelectionId());
+                answerItem.setAnswer(count+"");
+                count++;
                 CheckBox checkBox = new CheckBox(mContext);
+                checkBox.setTag(answerItem);
                 checkBox.setText(selectionItem.getTitle());
                 if (selectionItem.getIsSelect() != null && TextUtils.equals("1", selectionItem.getIsSelect())) {
                     checkBox.setChecked(true);
@@ -230,22 +234,33 @@ public class QuestionPreviewActivity extends BaseActivity {
                         }
                         lss_tv_notice.setText("");
                         lss_tv_notice.setVisibility(View.GONE);
-                        if (checkedNum < leastNum) {
+                        if (checkedNum < leastNum && leastNum != 0) {
                             lss_tv_notice.setText("最少选择" + leastNum + "项");
                             lss_tv_notice.setVisibility(View.VISIBLE);
                         }
-                        if (checkedNum > moreNum) {
+                        if (checkedNum > moreNum && moreNum != 0) {
                             lss_tv_notice.setText((TextUtils.isEmpty(lss_tv_notice.getText().toString()) ?
                                     "" : lss_tv_notice.getText() + ",") + "最多选择" + moreNum + "项");
                             lss_tv_notice.setVisibility(View.VISIBLE);
                         }
                     }
                 });
+                LinearLayout linearLayout=new LinearLayout(mContext);
+                linearLayout.setGravity(Gravity.CENTER_VERTICAL);
+                linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+                TextView textView=new TextView(mContext);
+                textView.setText(count+". ");
+                textView.setTextSize(16);
+                textView.setTextColor(Color.parseColor("#333333"));
+                LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.rightMargin= MyUtil.toDip(5);
+                linearLayout.addView(textView,params);
+                linearLayout.addView(checkBox);
                 checkBoxes.add(checkBox);
-                lss_ll_table_layout.addView(checkBox);
+                lss_ll_table_layout.addView(linearLayout);
             }
         }
-        aqpl_ll_table_layout.addView(view);
+        aqal_ll_table_layout.addView(view);
     }
 
     /**
@@ -258,7 +273,7 @@ public class QuestionPreviewActivity extends BaseActivity {
         View view = LayoutInflater.from(mContext).inflate(R.layout.layout_blank_selection, null);
         TextView lss_tv_num = (TextView) view.findViewById(R.id.lbs_tv_num);
         EditText lbs_et_answer = (EditText) view.findViewById(R.id.lbs_et_answer);
-        String textStr = (position + 1) + ". " + questionItem.getTitle();
+        String textStr = (position + 1) + "（填空题）. " + questionItem.getTitle();
         if (TextUtils.equals("1", questionItem.getIsMust())) {
             textStr = textStr + " * ";
             SpannableString contentStr = new SpannableString(textStr);
@@ -266,9 +281,13 @@ public class QuestionPreviewActivity extends BaseActivity {
             contentStr.setSpan(colorSpan, textStr.length() - 3, textStr.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             lss_tv_num.setText(contentStr);
         }
+        final AnswerItem answerItem=new AnswerItem();
+        answerItem.setQuestionnaireId(questionnaireItem.getQuestionnaireId());
+        answerItem.setQuestionId(questionItem.getQuestionId());
         lbs_et_answer.setMaxLines(Integer.parseInt(questionItem.getLine()));
         lbs_et_answer.setLines(Integer.parseInt(questionItem.getLine()));
-        aqpl_ll_table_layout.addView(view);
+        editTexts.add(lbs_et_answer);
+        aqal_ll_table_layout.addView(view);
     }
 
     private void onSubmitAction() {
@@ -299,13 +318,13 @@ public class QuestionPreviewActivity extends BaseActivity {
         params.put("title", questionnaireItem.getTitle());
         params.put("introduce", questionnaireItem.getIntroduce());
         params.put("thanks", questionnaireItem.getThanks());
-        int count=0;
+        int count = 0;
         for (int i = 0; i < questionnaireItem.getQuestionItemList().size(); i++) {
             QuestionItem questionItem = questionnaireItem.getQuestionItemList().get(i);
             params.put("title" + i, questionItem.getTitle());
             params.put("type" + i, questionItem.getType());
             params.put("isMust" + i, questionItem.getIsMust());
-            if(TextUtils.equals("1",questionItem.getIsMust())){
+            if (TextUtils.equals("1", questionItem.getIsMust())) {
                 count++;
             }
             if (TextUtils.equals("3", questionItem.getType())) {
@@ -322,7 +341,7 @@ public class QuestionPreviewActivity extends BaseActivity {
                 }
             }
         }
-        if(count==0){
+        if (count == 0) {
             toast("至少有一个问题需要是必填！");
             return;
         }
@@ -334,7 +353,7 @@ public class QuestionPreviewActivity extends BaseActivity {
                 if (!object.getResult().equals("fail")) {
                     toast("问卷创建成功！");
                     for (BaseActivity activity : createActivityList) {
-                        if(activity!=QuestionPreviewActivity.this){
+                        if (activity != AnswerQuestionnaireActivity.this) {
                             activity.finish();
                         }
                     }
@@ -359,6 +378,5 @@ public class QuestionPreviewActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        createActivityList.remove(this);
     }
 }

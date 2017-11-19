@@ -1,6 +1,7 @@
 package com.jyz.handquestionnaire.ui.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,6 +50,12 @@ public class CreateSelectionActivity extends BaseActivity {
     private String type = "1";//类型 1单选,2多选
     private ArrayList<CheckBox> checkBoxes = new ArrayList<>();
     private ArrayList<EditText> editTexts = new ArrayList<>();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        createActivityList.add(this);
+    }
 
     @Override
     protected void setView() {
@@ -317,6 +324,12 @@ public class CreateSelectionActivity extends BaseActivity {
         intent.putExtra("questionItem", questionItem);
         setResult(EditQuestionActivity.RESULT_CODE, intent);
         finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        createActivityList.remove(this);
     }
 
 }
