@@ -79,9 +79,14 @@ public class OkHttpHelp<T> {
             public void run() {
                 mOkHttpClient.newCall(request).enqueue(new Callback() {
                     @Override
-                    public void onFailure(Call call, IOException e) {
+                    public void onFailure(Call call, final IOException e) {
                         e.printStackTrace();
-                        listener.onFailed(e.toString());
+                        MyUtil.runOnUI(new Runnable() {
+                            @Override
+                            public void run() {
+                                listener.onFailed(e.toString());
+                            }
+                        });
                     }
 
                     @Override

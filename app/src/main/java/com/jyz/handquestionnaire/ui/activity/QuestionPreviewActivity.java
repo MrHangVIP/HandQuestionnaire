@@ -7,8 +7,10 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -27,9 +29,13 @@ import com.jyz.handquestionnaire.bean.ResultItem;
 import com.jyz.handquestionnaire.bean.SelectionItem;
 import com.jyz.handquestionnaire.bean.UserItem;
 import com.jyz.handquestionnaire.listener.ResponseListener;
+import com.jyz.handquestionnaire.ui.widget.WheelViewDialog;
 import com.jyz.handquestionnaire.util.Constant;
+import com.jyz.handquestionnaire.util.MyUtil;
 import com.jyz.handquestionnaire.util.ProgressDialogUtil;
 import com.jyz.handquestionnaire.util.SpfUtil;
+import com.jyz.handquestionnaire.util.WheelDateUtil;
+import com.jyz.handquestionnaire.util.WheelViewDialogUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,6 +43,7 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -56,6 +63,8 @@ public class QuestionPreviewActivity extends BaseActivity {
     private ArrayList<RadioButton> radioButtons = new ArrayList<>();
     private ArrayList<CheckBox> checkBoxes = new ArrayList<>();
     private QuestionnaireItem questionnaireItem;
+    private WheelDateUtil wheelDateUtil;
+    private WheelViewDialog timeWheelDialog;
 
 
     @Override
@@ -104,8 +113,34 @@ public class QuestionPreviewActivity extends BaseActivity {
         });
     }
 
+    private void initTimeDialog() {
+        LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
+        params1.weight = 1;
+        params1.gravity = Gravity.RIGHT;
+        wheelDateUtil = new WheelDateUtil(mContext);
+        LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(MyUtil.toDip(50), ViewGroup.LayoutParams.MATCH_PARENT);
+        LinearLayout.LayoutParams params3 = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
+        params3.weight = 1;
+        params3.gravity = Gravity.LEFT;
+        wheelDateUtil.setCyclic(true);
+        wheelDateUtil.textSize = 17;
+        LinkedHashMap<View, LinearLayout.LayoutParams> map = new LinkedHashMap<>();
+        map.put(wheelDateUtil.getWv_year(), params1);
+        map.put(wheelDateUtil.getWv_month(), params2);
+        map.put(wheelDateUtil.getWv_day(), params3);
+        timeWheelDialog = WheelViewDialogUtil.showWheelViewDialog(QuestionPreviewActivity.this, "选择结束时间", new WheelViewDialog.DialogSubmitListener() {
+            @Override
+            public void onSubmitClick(View v) {
+                String finishTime = wheelDateUtil.getYear()
+                        + "-" + wheelDateUtil.getMonth() + "-" + wheelDateUtil.getDay();
+                questionnaireItem.setFinishTime(finishTime);
+                timeWheelDialog.dismiss();
+            }
+        }, map);
+    }
+
     private void createContentView(QuestionnaireItem questionnaireItem) {
-        if(questionnaireItem!=null && !TextUtils.isEmpty(questionnaireItem.getIntroduce())){
+        if (questionnaireItem != null && !TextUtils.isEmpty(questionnaireItem.getIntroduce())) {
             aqpl_et_introduce.setText(questionnaireItem.getIntroduce());
         }
         if (questionnaireItem != null && questionnaireItem.getQuestionItemList() != null && questionnaireItem.getQuestionItemList().size() != 0) {
@@ -290,6 +325,11 @@ public class QuestionPreviewActivity extends BaseActivity {
         }
         if (TextUtils.isEmpty(questionnaireItem.getFinishTime())) {
             //提示问卷截止日期选择
+            if (timeWheelDialog == null) {
+                initTimeDialog();
+            }
+            timeWheelDialog.show();
+            return;
         }
         ProgressDialogUtil.showProgressDialog(this, true);
         Map<String, String> params = new HashMap<>();
@@ -299,13 +339,13 @@ public class QuestionPreviewActivity extends BaseActivity {
         params.put("title", questionnaireItem.getTitle());
         params.put("introduce", questionnaireItem.getIntroduce());
         params.put("thanks", questionnaireItem.getThanks());
-        int count=0;
+        int count = 0;
         for (int i = 0; i < questionnaireItem.getQuestionItemList().size(); i++) {
             QuestionItem questionItem = questionnaireItem.getQuestionItemList().get(i);
             params.put("title" + i, questionItem.getTitle());
             params.put("type" + i, questionItem.getType());
             params.put("isMust" + i, questionItem.getIsMust());
-            if(TextUtils.equals("1",questionItem.getIsMust())){
+            if (TextUtils.equals("1", questionItem.getIsMust())) {
                 count++;
             }
             if (TextUtils.equals("3", questionItem.getType())) {
@@ -322,7 +362,7 @@ public class QuestionPreviewActivity extends BaseActivity {
                 }
             }
         }
-        if(count==0){
+        if (count == 0) {
             toast("至少有一个问题需要是必填！");
             return;
         }
@@ -334,7 +374,7 @@ public class QuestionPreviewActivity extends BaseActivity {
                 if (!object.getResult().equals("fail")) {
                     toast("问卷创建成功！");
                     for (BaseActivity activity : createActivityList) {
-                        if(activity!=QuestionPreviewActivity.this){
+                        if (activity != QuestionPreviewActivity.this) {
                             activity.finish();
                         }
                     }

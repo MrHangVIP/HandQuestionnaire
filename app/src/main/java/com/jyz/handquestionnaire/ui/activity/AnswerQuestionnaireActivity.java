@@ -22,6 +22,7 @@ import com.jyz.handquestionnaire.BaseApplication;
 import com.jyz.handquestionnaire.R;
 import com.jyz.handquestionnaire.api.OkHttpHelp;
 import com.jyz.handquestionnaire.bean.AnswerItem;
+import com.jyz.handquestionnaire.bean.AnswerTagItem;
 import com.jyz.handquestionnaire.bean.QuestionItem;
 import com.jyz.handquestionnaire.bean.QuestionnaireItem;
 import com.jyz.handquestionnaire.bean.ResultItem;
@@ -48,9 +49,8 @@ public class AnswerQuestionnaireActivity extends BaseActivity {
     private TextView aqal_tv_introduce;
     private TextView aqal_tv_submit;
 
-    private ArrayList<RadioButton> radioButtons = new ArrayList<>();
-    private ArrayList<CheckBox> checkBoxes = new ArrayList<>();
     private ArrayList<EditText> editTexts = new ArrayList<>();
+    private ArrayList<AnswerTagItem> answerTagItems=new ArrayList<>();
     private QuestionnaireItem questionnaireItem;
 
 
@@ -112,6 +112,8 @@ public class AnswerQuestionnaireActivity extends BaseActivity {
      * @param position
      */
     private void addSingleSelection(QuestionItem questionItem, int position) {
+        ArrayList<RadioButton> radioButtons = new ArrayList<>();
+        AnswerTagItem answerTagItem=new AnswerTagItem();
         View view = LayoutInflater.from(mContext).inflate(R.layout.layout_single_selection, null);
         TextView lss_tv_num = (TextView) view.findViewById(R.id.lss_tv_num);
         LinearLayout lss_ll_table_layout = (LinearLayout) view.findViewById(R.id.lss_ll_table_layout);
@@ -167,6 +169,9 @@ public class AnswerQuestionnaireActivity extends BaseActivity {
             }
         }
         aqal_ll_table_layout.addView(view);
+        answerTagItem.setQuestionItem(questionItem);
+        answerTagItem.setRadioButtons(radioButtons);
+        answerTagItems.add(answerTagItem);
     }
 
     /**
@@ -176,6 +181,8 @@ public class AnswerQuestionnaireActivity extends BaseActivity {
      * @param position
      */
     private void addMoreSelection(QuestionItem questionItem, int position) {
+        final ArrayList<CheckBox> checkBoxes = new ArrayList<>();
+        AnswerTagItem answerTagItem=new AnswerTagItem();
         View view = LayoutInflater.from(mContext).inflate(R.layout.layout_more_selection, null);
         TextView lss_tv_num = (TextView) view.findViewById(R.id.lss_tv_num);
         LinearLayout lss_ll_table_layout = (LinearLayout) view.findViewById(R.id.lss_ll_table_layout);
@@ -261,6 +268,9 @@ public class AnswerQuestionnaireActivity extends BaseActivity {
             }
         }
         aqal_ll_table_layout.addView(view);
+        answerTagItem.setQuestionItem(questionItem);
+        answerTagItem.setCheckBoxes(checkBoxes);
+        answerTagItems.add(answerTagItem);
     }
 
     /**
@@ -281,6 +291,7 @@ public class AnswerQuestionnaireActivity extends BaseActivity {
             contentStr.setSpan(colorSpan, textStr.length() - 3, textStr.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             lss_tv_num.setText(contentStr);
         }
+        lbs_et_answer.setTag(questionItem);
         final AnswerItem answerItem=new AnswerItem();
         answerItem.setQuestionnaireId(questionnaireItem.getQuestionnaireId());
         answerItem.setQuestionId(questionItem.getQuestionId());
@@ -291,25 +302,6 @@ public class AnswerQuestionnaireActivity extends BaseActivity {
     }
 
     private void onSubmitAction() {
-        if (questionnaireItem == null || questionnaireItem.getQuestionItemList() == null || questionnaireItem.getQuestionItemList().size() == 0) {
-            toast("不能发表空问卷！");
-            return;
-        }
-        if (TextUtils.isEmpty(questionnaireItem.getIntroduce())) {
-            toast("问卷简介不能为空！");
-            return;
-        }
-        if (TextUtils.isEmpty(questionnaireItem.getThanks())) {
-            toast("感谢语不能为空！");
-            return;
-        }
-        if (TextUtils.isEmpty(questionnaireItem.getTitle())) {
-            toast("问卷标题不能为空！");
-            return;
-        }
-        if (TextUtils.isEmpty(questionnaireItem.getFinishTime())) {
-            //提示问卷截止日期选择
-        }
         ProgressDialogUtil.showProgressDialog(this, true);
         Map<String, String> params = new HashMap<>();
         UserItem userItem = BaseApplication.getAPPInstance().getmUser();
