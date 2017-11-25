@@ -60,8 +60,6 @@ public class QuestionPreviewActivity extends BaseActivity {
     private EditText aqpl_et_introduce;
     private TextView aqpl_tv_submit;
 
-    private ArrayList<RadioButton> radioButtons = new ArrayList<>();
-    private ArrayList<CheckBox> checkBoxes = new ArrayList<>();
     private QuestionnaireItem questionnaireItem;
     private WheelDateUtil wheelDateUtil;
     private WheelViewDialog timeWheelDialog;
@@ -169,6 +167,7 @@ public class QuestionPreviewActivity extends BaseActivity {
      * @param position
      */
     private void addSingleSelection(QuestionItem questionItem, int position) {
+        final ArrayList<RadioButton> radioButtons = new ArrayList<>();
         View view = LayoutInflater.from(mContext).inflate(R.layout.layout_single_selection, null);
         TextView lss_tv_num = (TextView) view.findViewById(R.id.lss_tv_num);
         LinearLayout lss_ll_table_layout = (LinearLayout) view.findViewById(R.id.lss_ll_table_layout);
@@ -213,6 +212,7 @@ public class QuestionPreviewActivity extends BaseActivity {
      * @param position
      */
     private void addMoreSelection(QuestionItem questionItem, int position) {
+        ArrayList<CheckBox> checkBoxes = new ArrayList<>();
         View view = LayoutInflater.from(mContext).inflate(R.layout.layout_more_selection, null);
         TextView lss_tv_num = (TextView) view.findViewById(R.id.lss_tv_num);
         LinearLayout lss_ll_table_layout = (LinearLayout) view.findViewById(R.id.lss_ll_table_layout);
