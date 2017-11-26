@@ -155,7 +155,7 @@ public class AnswerQuestionnaireActivity extends BaseActivity {
                 answerItem.setAnswer(count + "");
                 count++;
                 final RadioButton radioButton = new RadioButton(mContext);
-                radioButton.setTag(answerItem);
+                radioButton.setTag(selectionItem);
                 radioButton.setText(selectionItem.getTitle());
                 if (selectionItem.getIsSelect() != null && TextUtils.equals("1", selectionItem.getIsSelect())) {
                     radioButton.setChecked(true);
@@ -244,7 +244,7 @@ public class AnswerQuestionnaireActivity extends BaseActivity {
                 answerItem.setAnswer(count + "");
                 count++;
                 CheckBox checkBox = new CheckBox(mContext);
-                checkBox.setTag(answerItem);
+                checkBox.setTag(selectionItem);
                 checkBox.setText(selectionItem.getTitle());
                 if (selectionItem.getIsSelect() != null && TextUtils.equals("1", selectionItem.getIsSelect())) {
                     checkBox.setChecked(true);
@@ -412,20 +412,15 @@ public class AnswerQuestionnaireActivity extends BaseActivity {
             count++;
         }
         OkHttpHelp<ResultItem> httpHelp = OkHttpHelp.getInstance();
-        httpHelp.httpRequest("post", Constant.CREATE_QUESTIONNAIRE, params, new ResponseListener<ResultItem>() {
+        httpHelp.httpRequest("post", Constant.CREATE_ANSWER, params, new ResponseListener<ResultItem>() {
             @Override
             public void onSuccess(ResultItem object) {
                 ProgressDialogUtil.dismissProgressdialog();
                 if (!object.getResult().equals("fail")) {
-                    toast("问卷创建成功！");
-                    for (BaseActivity activity : createActivityList) {
-                        if (activity != AnswerQuestionnaireActivity.this) {
-                            activity.finish();
-                        }
-                    }
+                    toast("回答成功！");
                     finish();
                 } else {
-                    toast("创建问卷出错!请稍后重试");
+                    toast("回答失敗!请稍后重试");
                 }
             }
 

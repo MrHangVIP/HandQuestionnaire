@@ -21,6 +21,7 @@ public class Constant {
 
     public static final String CREATE_QUESTIONNAIRE="/CreateQuestionnaire";
     public static final String GET_QUESTIONNAIRELIST="/GetQuestionnaireList";
+    public static final String CREATE_ANSWER="/CreateAnswer";
 
     public static final int IMAGE_UPLOAD_OK=0x1000;
     public static final int IMAGE_UPLOAD_FAIL=0x1001;
