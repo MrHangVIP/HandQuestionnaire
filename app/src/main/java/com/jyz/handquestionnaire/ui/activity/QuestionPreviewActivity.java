@@ -31,6 +31,7 @@ import com.jyz.handquestionnaire.bean.UserItem;
 import com.jyz.handquestionnaire.listener.ResponseListener;
 import com.jyz.handquestionnaire.ui.widget.WheelViewDialog;
 import com.jyz.handquestionnaire.util.Constant;
+import com.jyz.handquestionnaire.util.DateUtil;
 import com.jyz.handquestionnaire.util.MyUtil;
 import com.jyz.handquestionnaire.util.ProgressDialogUtil;
 import com.jyz.handquestionnaire.util.SpfUtil;
@@ -42,6 +43,7 @@ import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -54,7 +56,6 @@ import java.util.Map;
 public class QuestionPreviewActivity extends BaseActivity {
     private static final String TAG = "QuestionPreviewActivity";
 
-    private TextView aqpl_ll_tv_introduce;
     private LinearLayout aqpl_ll_table_layout;
     private TextView aqpl_tv_empty;
     private EditText aqpl_et_introduce;
@@ -78,7 +79,6 @@ public class QuestionPreviewActivity extends BaseActivity {
 
     @Override
     protected void findViews() {
-        aqpl_ll_tv_introduce = (TextView) findViewById(R.id.aqpl_ll_tv_introduce);
         aqpl_ll_table_layout = (LinearLayout) findViewById(R.id.aqpl_ll_table_layout);
         aqpl_tv_empty = (TextView) findViewById(R.id.aqpl_tv_empty);
         aqpl_et_introduce = (EditText) findViewById(R.id.aqpl_et_introduce);
@@ -90,7 +90,6 @@ public class QuestionPreviewActivity extends BaseActivity {
         String title = getIntent().getBundleExtra("bundle").getString("title");
         questionnaireItem = (QuestionnaireItem) getIntent().getBundleExtra("bundle").getSerializable("questionnaireItem");
         setTitle(title);
-        aqpl_ll_tv_introduce.setText(questionnaireItem.getIntroduce());
         createContentView(questionnaireItem);
     }
 
@@ -212,7 +211,7 @@ public class QuestionPreviewActivity extends BaseActivity {
      * @param position
      */
     private void addMoreSelection(QuestionItem questionItem, int position) {
-        ArrayList<CheckBox> checkBoxes = new ArrayList<>();
+        final ArrayList<CheckBox> checkBoxes = new ArrayList<>();
         View view = LayoutInflater.from(mContext).inflate(R.layout.layout_more_selection, null);
         TextView lss_tv_num = (TextView) view.findViewById(R.id.lss_tv_num);
         LinearLayout lss_ll_table_layout = (LinearLayout) view.findViewById(R.id.lss_ll_table_layout);
@@ -327,6 +326,11 @@ public class QuestionPreviewActivity extends BaseActivity {
             //提示问卷截止日期选择
             if (timeWheelDialog == null) {
                 initTimeDialog();
+                Calendar calendar=Calendar.getInstance();
+                int year=calendar.get(Calendar.YEAR);
+                int month=calendar.get(Calendar.MONTH);
+                int day=calendar.get(Calendar.DAY_OF_MONTH);
+                wheelDateUtil.setPicker(year,month,day);
             }
             timeWheelDialog.show();
             return;
@@ -339,6 +343,8 @@ public class QuestionPreviewActivity extends BaseActivity {
         params.put("title", questionnaireItem.getTitle());
         params.put("introduce", questionnaireItem.getIntroduce());
         params.put("thanks", questionnaireItem.getThanks());
+        params.put("finishTime", questionnaireItem.getFinishTime());
+        params.put("finishTimeStmp", DateUtil.getStringToDate(questionnaireItem.getFinishTime(),DateUtil.Date_Format_1)+"");
         int count = 0;
         for (int i = 0; i < questionnaireItem.getQuestionItemList().size(); i++) {
             QuestionItem questionItem = questionnaireItem.getQuestionItemList().get(i);

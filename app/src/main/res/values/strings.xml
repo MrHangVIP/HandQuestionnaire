@@ -1,8 +1,19 @@
 <resources>
     <string name="app_name">HandQuestionnaire</string>
+    <string name="app_name_ch">掌上问卷</string>
 
     <string name="app_ok">确定</string>
     <string name="app_cancel">取消</string>
     <string name="app_confirm">确认</string>
     <string name="app_tip">提示</string>
+
+    <!-- 分享开始 -->
+    <string name="share">分享</string>
+    <string name="WEIXIN">微信</string>
+    <string name="WE_FREND">朋友圈</string>
+    <string name="QQ">QQ</string>
+    <string name="QQ_ZONE">空间</string>
+    <string name="WEIBO">微博</string>
+
+    <!-- 分享结束 -->
 </resources>

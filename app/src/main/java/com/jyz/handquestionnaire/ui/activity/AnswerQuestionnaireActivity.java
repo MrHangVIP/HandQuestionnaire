@@ -1,13 +1,17 @@
 package com.jyz.handquestionnaire.ui.activity;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.text.Selection;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -29,12 +33,15 @@ import com.jyz.handquestionnaire.bean.ResultItem;
 import com.jyz.handquestionnaire.bean.SelectionItem;
 import com.jyz.handquestionnaire.bean.UserItem;
 import com.jyz.handquestionnaire.listener.ResponseListener;
+import com.jyz.handquestionnaire.ui.widget.ShareDialog;
 import com.jyz.handquestionnaire.util.Constant;
 import com.jyz.handquestionnaire.util.MyUtil;
 import com.jyz.handquestionnaire.util.ProgressDialogUtil;
+import com.jyz.handquestionnaire.util.SpfUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -50,7 +57,7 @@ public class AnswerQuestionnaireActivity extends BaseActivity {
     private TextView aqal_tv_submit;
 
     private ArrayList<EditText> editTexts = new ArrayList<>();
-    private ArrayList<AnswerTagItem> answerTagItems=new ArrayList<>();
+    private ArrayList<AnswerTagItem> answerTagItems = new ArrayList<>();
     private QuestionnaireItem questionnaireItem;
 
 
@@ -64,6 +71,7 @@ public class AnswerQuestionnaireActivity extends BaseActivity {
         aqal_ll_table_layout = (LinearLayout) findViewById(R.id.aqal_ll_table_layout);
         aqal_tv_introduce = (TextView) findViewById(R.id.aqal_tv_introduce);
         aqal_tv_submit = (TextView) findViewById(R.id.aqal_tv_submit);
+        setMenu();
     }
 
     @Override
@@ -80,6 +88,17 @@ public class AnswerQuestionnaireActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 onSubmitAction();
+            }
+        });
+    }
+
+    void setMenu(){
+        toolbar.inflateMenu(R.menu.menu_share);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                new ShareDialog((Activity)AnswerQuestionnaireActivity.this ).show();
+                return true;
             }
         });
     }
@@ -112,8 +131,8 @@ public class AnswerQuestionnaireActivity extends BaseActivity {
      * @param position
      */
     private void addSingleSelection(QuestionItem questionItem, int position) {
-        ArrayList<RadioButton> radioButtons = new ArrayList<>();
-        AnswerTagItem answerTagItem=new AnswerTagItem();
+        final ArrayList<RadioButton> radioButtons = new ArrayList<>();
+        AnswerTagItem answerTagItem = new AnswerTagItem();
         View view = LayoutInflater.from(mContext).inflate(R.layout.layout_single_selection, null);
         TextView lss_tv_num = (TextView) view.findViewById(R.id.lss_tv_num);
         LinearLayout lss_ll_table_layout = (LinearLayout) view.findViewById(R.id.lss_ll_table_layout);
@@ -126,14 +145,14 @@ public class AnswerQuestionnaireActivity extends BaseActivity {
             lss_tv_num.setText(contentStr);
         }
         if (questionItem.getSelectionItemList() != null) {
-            int count=0;
+            int count = 0;
             for (SelectionItem selectionItem : questionItem.getSelectionItemList()) {
                 count++;
-                final AnswerItem answerItem=new AnswerItem();
+                final AnswerItem answerItem = new AnswerItem();
                 answerItem.setQuestionnaireId(questionnaireItem.getQuestionnaireId());
                 answerItem.setQuestionId(questionItem.getQuestionId());
                 answerItem.setSelectionId(selectionItem.getSelectionId());
-                answerItem.setAnswer(count+"");
+                answerItem.setAnswer(count + "");
                 count++;
                 final RadioButton radioButton = new RadioButton(mContext);
                 radioButton.setTag(answerItem);
@@ -154,16 +173,16 @@ public class AnswerQuestionnaireActivity extends BaseActivity {
                     }
                 });
                 radioButtons.add(radioButton);
-                LinearLayout linearLayout=new LinearLayout(mContext);
+                LinearLayout linearLayout = new LinearLayout(mContext);
                 linearLayout.setGravity(Gravity.CENTER_VERTICAL);
                 linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-                TextView textView=new TextView(mContext);
-                textView.setText(count+". ");
+                TextView textView = new TextView(mContext);
+                textView.setText(count + ". ");
                 textView.setTextSize(16);
                 textView.setTextColor(Color.parseColor("#333333"));
-                LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                params.rightMargin= MyUtil.toDip(5);
-                linearLayout.addView(textView,params);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.rightMargin = MyUtil.toDip(5);
+                linearLayout.addView(textView, params);
                 linearLayout.addView(radioButton);
                 lss_ll_table_layout.addView(linearLayout);
             }
@@ -182,7 +201,7 @@ public class AnswerQuestionnaireActivity extends BaseActivity {
      */
     private void addMoreSelection(QuestionItem questionItem, int position) {
         final ArrayList<CheckBox> checkBoxes = new ArrayList<>();
-        AnswerTagItem answerTagItem=new AnswerTagItem();
+        AnswerTagItem answerTagItem = new AnswerTagItem();
         View view = LayoutInflater.from(mContext).inflate(R.layout.layout_more_selection, null);
         TextView lss_tv_num = (TextView) view.findViewById(R.id.lss_tv_num);
         LinearLayout lss_ll_table_layout = (LinearLayout) view.findViewById(R.id.lss_ll_table_layout);
@@ -218,11 +237,11 @@ public class AnswerQuestionnaireActivity extends BaseActivity {
         if (questionItem.getSelectionItemList() != null) {
             int count = 0;
             for (final SelectionItem selectionItem : questionItem.getSelectionItemList()) {
-                final AnswerItem answerItem=new AnswerItem();
+                final AnswerItem answerItem = new AnswerItem();
                 answerItem.setQuestionnaireId(questionnaireItem.getQuestionnaireId());
                 answerItem.setQuestionId(questionItem.getQuestionId());
                 answerItem.setSelectionId(selectionItem.getSelectionId());
-                answerItem.setAnswer(count+"");
+                answerItem.setAnswer(count + "");
                 count++;
                 CheckBox checkBox = new CheckBox(mContext);
                 checkBox.setTag(answerItem);
@@ -252,16 +271,16 @@ public class AnswerQuestionnaireActivity extends BaseActivity {
                         }
                     }
                 });
-                LinearLayout linearLayout=new LinearLayout(mContext);
+                LinearLayout linearLayout = new LinearLayout(mContext);
                 linearLayout.setGravity(Gravity.CENTER_VERTICAL);
                 linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-                TextView textView=new TextView(mContext);
-                textView.setText(count+". ");
+                TextView textView = new TextView(mContext);
+                textView.setText(count + ". ");
                 textView.setTextSize(16);
                 textView.setTextColor(Color.parseColor("#333333"));
-                LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                params.rightMargin= MyUtil.toDip(5);
-                linearLayout.addView(textView,params);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.rightMargin = MyUtil.toDip(5);
+                linearLayout.addView(textView, params);
                 linearLayout.addView(checkBox);
                 checkBoxes.add(checkBox);
                 lss_ll_table_layout.addView(linearLayout);
@@ -292,7 +311,7 @@ public class AnswerQuestionnaireActivity extends BaseActivity {
             lss_tv_num.setText(contentStr);
         }
         lbs_et_answer.setTag(questionItem);
-        final AnswerItem answerItem=new AnswerItem();
+        final AnswerItem answerItem = new AnswerItem();
         answerItem.setQuestionnaireId(questionnaireItem.getQuestionnaireId());
         answerItem.setQuestionId(questionItem.getQuestionId());
         lbs_et_answer.setMaxLines(Integer.parseInt(questionItem.getLine()));
@@ -302,40 +321,95 @@ public class AnswerQuestionnaireActivity extends BaseActivity {
     }
 
     private void onSubmitAction() {
-        ProgressDialogUtil.showProgressDialog(this, true);
-        Map<String, String> params = new HashMap<>();
         UserItem userItem = BaseApplication.getAPPInstance().getmUser();
-        params.put("userId", userItem.getUserId() + "");
-        params.put("nickname", userItem.getNickName() + "");
-        params.put("title", questionnaireItem.getTitle());
-        params.put("introduce", questionnaireItem.getIntroduce());
-        params.put("thanks", questionnaireItem.getThanks());
-        int count = 0;
-        for (int i = 0; i < questionnaireItem.getQuestionItemList().size(); i++) {
-            QuestionItem questionItem = questionnaireItem.getQuestionItemList().get(i);
-            params.put("title" + i, questionItem.getTitle());
-            params.put("type" + i, questionItem.getType());
-            params.put("isMust" + i, questionItem.getIsMust());
-            if (TextUtils.equals("1", questionItem.getIsMust())) {
-                count++;
+        if (!SpfUtil.getBoolean(Constant.IS_LOGIN, false) || userItem == null) {
+            toast("请先登陆！");
+            return;
+        }
+        ArrayList<AnswerItem> answerItemList = new ArrayList<>();
+        for (EditText editText : editTexts) {
+            QuestionItem item = (QuestionItem) editText.getTag();
+            if (TextUtils.equals("1", item.getIsMust()) && editText.getText().length() <= 0) {
+                showTip();
+                answerItemList.clear();
+                return;
             }
-            if (TextUtils.equals("3", questionItem.getType())) {
-                params.put("lines" + i, questionItem.getLine());
-            } else {
-                if (TextUtils.equals("2", questionItem.getType())) {
-                    params.put("least" + i, questionItem.getLeast());
-                    params.put("more" + i, questionItem.getMore());
+            if (editText.getText().length() > 0) {
+                AnswerItem answerItem = new AnswerItem();
+                answerItem.setAnswer(editText.getText().toString());
+                answerItem.setType(item.getType());
+                answerItem.setQuestionnaireId(item.getQuestionnaireId());
+                answerItem.setQuestionId(item.getQuestionId());
+                answerItem.setUserId(userItem.getUserId());
+                answerItemList.add(answerItem);
+            }
+        }
+
+        for (AnswerTagItem answerTagItem : answerTagItems) {
+            QuestionItem item = answerTagItem.getQuestionItem();
+            String type = item.getType();
+            if (TextUtils.equals("1", type)) {//单选
+                ArrayList<RadioButton> radioButtons=answerTagItem.getRadioButtons();
+                SelectionItem selectionItem=null;
+                for (RadioButton radioButton:radioButtons){
+                    if(radioButton.isChecked()){
+                        selectionItem=(SelectionItem)radioButton.getTag();
+                    }
                 }
-                for (int j = 0; j < questionItem.getSelectionItemList().size(); j++) {
-                    SelectionItem selection = questionItem.getSelectionItemList().get(j);
-                    params.put(i + "title" + j, selection.getTitle());
-                    params.put(i + "isSelect" + j, selection.getIsSelect());
+                if (TextUtils.equals("1", item.getIsMust())&& selectionItem==null) {
+                    showTip();
+                    answerItemList.clear();
+                    return;
+                }
+                if(selectionItem!=null){
+                    AnswerItem answerItem = new AnswerItem();
+                    answerItem.setAnswer(selectionItem.getTitle());
+                    answerItem.setType(item.getType());
+                    answerItem.setQuestionnaireId(item.getQuestionnaireId());
+                    answerItem.setQuestionId(item.getQuestionId());
+                    answerItem.setSelectionId(selectionItem.getSelectionId());
+                    answerItem.setUserId(userItem.getUserId());
+                    answerItemList.add(answerItem);
+                }
+            }
+            if (TextUtils.equals("2",type)){
+                ArrayList<CheckBox> checkBoxes=answerTagItem.getCheckBoxes();
+                int selection=0;
+                for (CheckBox checkBox:checkBoxes){
+                    if(checkBox.isChecked()){
+                        selection++;
+                       SelectionItem selectionItem=(SelectionItem)checkBox.getTag();
+                        AnswerItem answerItem = new AnswerItem();
+                        answerItem.setAnswer(selectionItem.getTitle());
+                        answerItem.setType(item.getType());
+                        answerItem.setQuestionnaireId(item.getQuestionnaireId());
+                        answerItem.setQuestionId(item.getQuestionId());
+                        answerItem.setSelectionId(selectionItem.getSelectionId());
+                        answerItem.setUserId(userItem.getUserId());
+                        answerItemList.add(answerItem);
+                    }
+                }
+                int least=Integer.parseInt(item.getLeast());
+                int more=Integer.parseInt(item.getMore());
+                if(least<more){
+                    least=more;
+                }
+                if(selection<least || selection>more){
+                    toast("多选题选项个数请参考提示！");
                 }
             }
         }
-        if (count == 0) {
-            toast("至少有一个问题需要是必填！");
-            return;
+        ProgressDialogUtil.showProgressDialog(this, true);
+        Map<String, String> params = new HashMap<>();
+        int count = 0;
+        for(AnswerItem answerItem:answerItemList){
+            params.put("questionnaireId"+count, answerItem.getQuestionnaireId()+"");
+            params.put("questionId"+count, answerItem.getQuestionId()+"");
+            params.put("userId"+count, answerItem.getUserId()+"");
+            params.put("answer"+count, answerItem.getAnswer()+"");
+            params.put("selectionId"+count, answerItem.getSelectionId()+"");
+            params.put("type"+count, answerItem.getType()+"");
+            count++;
         }
         OkHttpHelp<ResultItem> httpHelp = OkHttpHelp.getInstance();
         httpHelp.httpRequest("post", Constant.CREATE_QUESTIONNAIRE, params, new ResponseListener<ResultItem>() {
@@ -365,6 +439,10 @@ public class AnswerQuestionnaireActivity extends BaseActivity {
                 return ResultItem.class;
             }
         });
+    }
+
+    private void showTip() {
+        toast("必填项必须回答！");
     }
 
     @Override

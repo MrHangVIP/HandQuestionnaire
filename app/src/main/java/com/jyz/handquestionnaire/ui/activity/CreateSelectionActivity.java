@@ -227,11 +227,11 @@ public class CreateSelectionActivity extends BaseActivity {
                                     //刷新最大最小选项
                                     String text = acsl_tv_select_least.getText().toString().trim();
                                     if (!TextUtils.equals("不限", text) && Integer.parseInt(text) > acsl_ll_selection_layout.getChildCount()) {
-                                        acsl_tv_select_least.setText(acsl_ll_selection_layout.getChildCount());
+                                        acsl_tv_select_least.setText(acsl_ll_selection_layout.getChildCount()+"");
                                     }
                                     text = acsl_tv_select_more.getText().toString().trim();
                                     if (!TextUtils.equals("不限", text) && Integer.parseInt(text) > acsl_ll_selection_layout.getChildCount()) {
-                                        acsl_tv_select_more.setText(acsl_ll_selection_layout.getChildCount());
+                                        acsl_tv_select_more.setText(acsl_ll_selection_layout.getChildCount()+"");
                                     }
                                 }
 
@@ -255,8 +255,7 @@ public class CreateSelectionActivity extends BaseActivity {
      * @return
      */
     private String[] getDatas() {
-        String[] datas = new String[acsl_ll_selection_layout.getChildCount() + 1];
-        datas[0] = "不限";
+        String[] datas = new String[acsl_ll_selection_layout.getChildCount() ];
         for (int i = 1; i < datas.length; i++) {
             datas[i] = i + "";
         }

@@ -17,30 +17,7 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="#FFFFFF"
-                android:padding="10dp">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="15sp"
-                    android:text="问卷说明 : "
-                    android:textColor="#235EAB"/>
-
-                <TextView
-                    android:layout_marginTop="8dp"
-                    android:id="@+id/aqpl_ll_tv_introduce"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:textColor="#111111"/>
-
-            </LinearLayout>
-            
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
