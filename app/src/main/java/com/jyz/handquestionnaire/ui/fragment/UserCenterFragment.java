@@ -1,5 +1,6 @@
 package com.jyz.handquestionnaire.ui.fragment;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,15 +14,19 @@ import com.jyz.handquestionnaire.BaseApplication;
 import com.jyz.handquestionnaire.BaseFragment;
 import com.jyz.handquestionnaire.R;
 import com.jyz.handquestionnaire.api.OkHttpHelp;
+import com.jyz.handquestionnaire.bean.QuestionnaireItem;
 import com.jyz.handquestionnaire.bean.ResultItem;
 import com.jyz.handquestionnaire.bean.UserItem;
 import com.jyz.handquestionnaire.listener.ResponseListener;
 import com.jyz.handquestionnaire.ui.activity.LoginActivity;
+import com.jyz.handquestionnaire.ui.activity.QuestionnaireListActivity;
+import com.jyz.handquestionnaire.ui.adapter.QuestionAdapter;
 import com.jyz.handquestionnaire.ui.widget.CircleImageView;
 import com.jyz.handquestionnaire.util.Constant;
 import com.jyz.handquestionnaire.util.ProgressDialogUtil;
 import com.jyz.handquestionnaire.util.SpfUtil;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -81,6 +86,34 @@ public class UserCenterFragment extends BaseFragment {
                 jumpToNext(LoginActivity.class);
             }
         });
+
+        ful_tv_publish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!SpfUtil.getBoolean(Constant.IS_LOGIN, false) || BaseApplication.getAPPInstance().getmUser() == null) {
+                    toast("请先登陆！");
+                    return;
+                }
+                Intent intent = new Intent(context, QuestionnaireListActivity.class);
+                intent.putExtra("type", "publish");
+                intent.putExtra("userId", BaseApplication.getAPPInstance().getmUser().getUserId() + "");
+                getActivity().startActivity(intent);
+            }
+        });
+
+        ful_tv_write.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!SpfUtil.getBoolean(Constant.IS_LOGIN, false) || BaseApplication.getAPPInstance().getmUser() == null) {
+                    toast("请先登陆！");
+                    return;
+                }
+                Intent intent = new Intent(context, QuestionnaireListActivity.class);
+                intent.putExtra("type", "answer");
+                intent.putExtra("userId", BaseApplication.getAPPInstance().getmUser().getUserId() + "");
+                getActivity().startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -103,6 +136,8 @@ public class UserCenterFragment extends BaseFragment {
         ful_tv_nickname.setVisibility(View.GONE);
         ful_tv_score.setVisibility(View.GONE);
         ful_tv_login_and_regist.setVisibility(View.VISIBLE);
+        publishStr("0");
+        answerNum("0");
     }
 
     private void updateData(UserItem user) {
@@ -117,6 +152,8 @@ public class UserCenterFragment extends BaseFragment {
         ful_tv_score.setVisibility(View.VISIBLE);
         ful_tv_score.setText(user.getScore() + "");
         ful_tv_login_and_regist.setVisibility(View.GONE);
+        getMyQuestionnaireNum();
+        getMyAnswerNum();
     }
 
     private void setSelfData() {
@@ -169,5 +206,97 @@ public class UserCenterFragment extends BaseFragment {
                 }
 
         );
+    }
+
+    /**
+     * 获取我的问卷数量
+     */
+    private void getMyQuestionnaireNum() {
+        Map<String, String> map = new HashMap<>();
+        map.put("userId", BaseApplication.getAPPInstance().getmUser().getUserId() + "");
+        map.put("type", "publish");
+        ProgressDialogUtil.showProgressDialog(getActivity(), true);
+        OkHttpHelp<ResultItem> okHttpHelp = OkHttpHelp.getInstance();
+        okHttpHelp.httpRequest("", Constant.GET_QUESTIONNAIRELIST, map, new ResponseListener<ResultItem>() {
+            @Override
+            public void onSuccess(ResultItem object) {
+                ProgressDialogUtil.dismissProgressdialog();
+                if ("fail".equals(object.getResult())) {
+                    publishStr(0 + "");
+                    return;
+                }
+                JSONArray jsonArray = null;
+                try {
+                    jsonArray = new JSONArray(object.getData());
+                    if (jsonArray != null) {
+                        publishStr(jsonArray.length() + "");
+                    } else {
+                        publishStr(0 + "");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailed(String message) {
+                publishStr(0 + "");
+            }
+
+            @Override
+            public Class<ResultItem> getEntityClass() {
+                return ResultItem.class;
+            }
+        });
+    }
+
+    /**
+     * 获取我回答的问卷数量
+     */
+    private void getMyAnswerNum() {
+        Map<String, String> map = new HashMap<>();
+        map.put("userId", BaseApplication.getAPPInstance().getmUser().getUserId() + "");
+        map.put("type", "answer");
+        ProgressDialogUtil.showProgressDialog(getActivity(), true);
+        OkHttpHelp<ResultItem> okHttpHelp = OkHttpHelp.getInstance();
+        okHttpHelp.httpRequest("", Constant.GET_QUESTIONNAIRELIST, map, new ResponseListener<ResultItem>() {
+            @Override
+            public void onSuccess(ResultItem object) {
+                ProgressDialogUtil.dismissProgressdialog();
+                if ("fail".equals(object.getResult())) {
+                    answerNum(0 + "");
+                    return;
+                }
+                JSONArray jsonArray = null;
+                try {
+                    jsonArray = new JSONArray(object.getData());
+                    if (jsonArray != null) {
+                        answerNum(jsonArray.length() + "");
+                    } else {
+                        answerNum(0 + "");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailed(String message) {
+                answerNum(0 + "");
+            }
+
+            @Override
+            public Class<ResultItem> getEntityClass() {
+                return ResultItem.class;
+            }
+        });
+    }
+
+    private void publishStr(String num) {
+        ful_tv_publish.setText("我发布的\n" + num);
+    }
+
+    private void answerNum(String num) {
+        ful_tv_write.setText("我回答的\n" + num);
     }
 }

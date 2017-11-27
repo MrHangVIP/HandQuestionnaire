@@ -5,6 +5,7 @@ import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ public class QuestionnaireFragment extends BaseFragment implements SwipeRefreshL
 
     private List<QuestionnaireItem> questionnaireItemList = new ArrayList<>();
     private String type;//问卷类型 1最热,2最新,3所有
+    private String userId;//问卷类型 1最热,2最新,3所有
     private static final int refresh = 0x100;
 
     private Handler handler = new Handler() {
@@ -79,6 +81,7 @@ public class QuestionnaireFragment extends BaseFragment implements SwipeRefreshL
     @Override
     protected void initData() {
         type = getArguments().getString("type");
+        userId=getArguments().getString("userId");
     }
 
     @Override
@@ -105,6 +108,9 @@ public class QuestionnaireFragment extends BaseFragment implements SwipeRefreshL
     private void getData() {
         Map<String, String> map = new HashMap<>();
         map.put("type", type);
+        if(!TextUtils.isEmpty(userId)){
+            map.put("userId", userId);
+        }
         ProgressDialogUtil.showProgressDialog(getActivity(), true);
         OkHttpHelp<ResultItem> okHttpHelp = OkHttpHelp.getInstance();
         okHttpHelp.httpRequest("", Constant.GET_QUESTIONNAIRELIST, map, new ResponseListener<ResultItem>() {
