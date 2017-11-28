@@ -63,6 +63,7 @@
         android:layout_below="@+id/iql_civ_head"
         android:layout_marginBottom="13dp"
         android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
         android:ellipsize="end"
         android:maxLines="2"
         android:text="当今世界还有哪个国家比中国要牛逼?没有了"
@@ -74,7 +75,6 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/iql_tv_title"
-        android:layout_marginTop="10dp"
         android:background="#CCCCCC" />
 
 </RelativeLayout>

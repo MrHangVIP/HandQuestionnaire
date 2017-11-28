@@ -82,6 +82,17 @@ public class QuestionnaireFragment extends BaseFragment implements SwipeRefreshL
     protected void initData() {
         type = getArguments().getString("type");
         userId=getArguments().getString("userId");
+        if(toolbar!=null){
+            toolbar.setVisibility(View.GONE);
+        }
+        if(TextUtils.equals("publish",type)){
+            setTitle("我发布的问卷");
+            toolbar.setVisibility(View.VISIBLE);
+        }
+        if(TextUtils.equals("answer",type)){
+            setTitle("我回答的问卷");
+            toolbar.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

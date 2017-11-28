@@ -153,7 +153,6 @@ public class AnswerQuestionnaireActivity extends BaseActivity {
                 answerItem.setQuestionId(questionItem.getQuestionId());
                 answerItem.setSelectionId(selectionItem.getSelectionId());
                 answerItem.setAnswer(count + "");
-                count++;
                 final RadioButton radioButton = new RadioButton(mContext);
                 radioButton.setTag(selectionItem);
                 radioButton.setText(selectionItem.getTitle());

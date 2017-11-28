@@ -2,10 +2,12 @@ package com.jyz.handquestionnaire;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.AnimRes;
 import android.support.annotation.ColorRes;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.IntegerRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -76,12 +78,47 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         toolbarText = (TextView) view.findViewById(R.id.toolbar_title);
         if (toolbar != null && toolbarText != null) {
-            toolbarText.setText(setTitle());
+            toolbar.setNavigationIcon(setBackIcon());
+            toolbar.setNavigationOnClickListener(setBackClick());
         }
     }
 
-    protected String setTitle() {
-        return null;
+    protected void setTitle(String title) {
+        if(toolbarText!=null){
+            toolbarText.setText(title);
+        }
+    }
+
+    /**
+     * 设置返回按钮图标
+     *
+     * @return 按钮图标
+     */
+    public Drawable setBackIcon() {
+        return getDrawableRes(R.drawable.back_toolbar);
+    }
+
+    protected Drawable getDrawableRes(@DrawableRes int resId) {
+        final int version = Build.VERSION.SDK_INT;
+        if (version >= 23) {
+            return ContextCompat.getDrawable(context, resId);
+        } else {
+            return getResources().getDrawable(resId);
+        }
+    }
+
+    /**
+     * 设置返回按钮监听
+     *
+     * @return 按钮监听
+     */
+    public View.OnClickListener setBackClick() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((BaseActivity)context).onBackPressed();
+            }
+        };
     }
 
     protected abstract View getLayout(LayoutInflater inflater, ViewGroup container);

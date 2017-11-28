@@ -53,7 +53,11 @@ public class ScoreRecordAdapter extends RecyclerView.Adapter<ScoreRecordAdapter.
         final ScoreRecordItem item = scoreRecordList.get(position);
         holder.isrl_tv_time.setText(item.getCreatetime());
         holder.isrl_tv_content.setText(item.getAction());
-        holder.isrl_tv_record.setText(item.getScore_change()+"");
+        if (item.getScore_change()>0){
+            holder.isrl_tv_record.setText("+"+item.getScore_change());
+        }else{
+            holder.isrl_tv_record.setText(item.getScore_change()+"");
+        }
     }
 
     @Override

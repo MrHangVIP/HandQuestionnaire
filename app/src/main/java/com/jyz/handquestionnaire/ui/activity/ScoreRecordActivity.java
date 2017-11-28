@@ -44,9 +44,9 @@ public class ScoreRecordActivity extends BaseActivity implements SwipeRefreshLay
 
     @Override
     protected void findViews() {
-        mRecyclerView = (RecyclerView) findViewById(R.id.fql_rv_recycleview);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycleview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.fql_sr_swiperefresh);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_light,
                 android.R.color.holo_red_light, android.R.color.holo_orange_light,
@@ -55,6 +55,7 @@ public class ScoreRecordActivity extends BaseActivity implements SwipeRefreshLay
 
     @Override
     protected void initData() {
+        setTitle("积分记录");
         onRefresh();
     }
 
@@ -72,7 +73,7 @@ public class ScoreRecordActivity extends BaseActivity implements SwipeRefreshLay
         }
         ProgressDialogUtil.showProgressDialog(mContext, true);
         OkHttpHelp<ResultItem> okHttpHelp = OkHttpHelp.getInstance();
-        okHttpHelp.httpRequest("", Constant.GET_QUESTIONNAIRELIST, map, new ResponseListener<ResultItem>() {
+        okHttpHelp.httpRequest("", Constant.GET_SCORE_RECORD, map, new ResponseListener<ResultItem>() {
             @Override
             public void onSuccess(ResultItem object) {
                 swipeRefreshLayout.setRefreshing(false);

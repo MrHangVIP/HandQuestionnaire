@@ -339,6 +339,7 @@ public class QuestionPreviewActivity extends BaseActivity {
         Map<String, String> params = new HashMap<>();
         UserItem userItem = BaseApplication.getAPPInstance().getmUser();
         params.put("userId", userItem.getUserId() + "");
+        params.put("headUrl", userItem.getHeadUrl() + "");
         params.put("nickname", userItem.getNickName() + "");
         params.put("title", questionnaireItem.getTitle());
         params.put("introduce", questionnaireItem.getIntroduce());

@@ -60,7 +60,7 @@ public class DateUtil {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		return date.getTime()/1000;
+		return date.getTime();
 	}
 	
 }
