@@ -1,60 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
 
     <RelativeLayout
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:padding="15dp">
 
         <com.jyz.handquestionnaire.ui.widget.CircleImageView
             android:id="@+id/ful_iv_head"
-            android:layout_height="100dp"
             android:layout_width="100dp"
-            android:src="#3DA8F5"
-            app:civ_border_color="#cccccc"
-            app:civ_border_width="5dp"
+            android:layout_height="100dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"/>
-
-        <TextView
-            android:layout_below="@+id/ful_iv_head"
-            android:id="@+id/ful_tv_login_and_regist"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="登陆/注册"
             android:layout_marginTop="20dp"
-            android:textSize="18sp"
-            android:visibility="gone"/>
+            android:src="@drawable/img_user_default" />
 
         <TextView
+            android:id="@+id/ful_tv_login_and_regist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/ful_iv_head"
-            android:id="@+id/ful_tv_nickname"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="昵称：航航"
-            android:layout_marginTop="10dp"
-            android:textSize="16sp"
-            android:visibility="gone"/>
+            android:layout_marginTop="20dp"
+            android:text="登陆/注册"
+            android:textSize="18sp"
+            android:visibility="gone" />
 
         <TextView
-            android:layout_below="@+id/ful_tv_nickname"
-            android:id="@+id/ful_tv_score"
-            android:layout_height="wrap_content"
+            android:id="@+id/ful_tv_nickname"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ful_iv_head"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="昵称：航航"
+            android:textSize="16sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/ful_tv_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ful_tv_nickname"
             android:layout_centerHorizontal="true"
             android:drawableLeft="@drawable/icon_coins"
-            android:text="10"
             android:drawablePadding="5dp"
             android:padding="6dp"
+            android:text="10"
             android:textSize="15sp"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
     </RelativeLayout>
 
@@ -68,23 +66,23 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.0"
-            android:textSize="20sp"
-            android:textColor="#333333"
             android:gravity="center"
-            android:text="我发布的\n0"/>
+            android:text="我发布的\n0"
+            android:textColor="#333333"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/ful_tv_write"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.0"
-            android:textSize="20sp"
-            android:textColor="#333333"
             android:gravity="center"
-            android:text="我填写的 \n 0"/>
+            android:text="我填写的 \n 0"
+            android:textColor="#333333"
+            android:textSize="20sp" />
 
     </LinearLayout>
 
-    <include layout="@layout/activity_setting_line"/>
+    <include layout="@layout/activity_setting_line" />
 
 </LinearLayout>

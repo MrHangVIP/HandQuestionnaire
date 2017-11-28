@@ -34,6 +34,8 @@ public class QuestionnaireItem implements Serializable{
 
     private String nickName;//创建名字
 
+    private String headUrl;//创建名字
+
     private int answerNum;//回答数量
 
     public int getQuestionnaireId() {
@@ -130,6 +132,14 @@ public class QuestionnaireItem implements Serializable{
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
+    }
+
+    public String getHeadUrl() {
+        return headUrl;
+    }
+
+    public void setHeadUrl(String headUrl) {
+        this.headUrl = headUrl;
     }
 
     public int getAnswerNum() {

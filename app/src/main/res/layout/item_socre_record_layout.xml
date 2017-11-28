@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#E9E9E9">
+
+    <View
+        android:layout_width="500dp"
+        android:layout_height="1.5dp"
+        android:layout_marginLeft="-209dp"
+        android:rotation="90"
+        android:background="#CCCCCC" />
+
+    <ImageView
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="52dp"
+        android:src="@drawable/icon_score_point" />
+
+    <ImageView
+        android:layout_width="10dp"
+        android:layout_height="15dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="82dp"
+        android:layout_marginTop="50dip"
+        android:src="@drawable/icon_left_rangale" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:paddingLeft="10dp">
+
+        <TextView
+            android:id="@+id/isrl_tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="2017-10-25"
+            android:textColor="#999999"
+            android:textSize="11sp" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="80dp"
+            android:layout_below="@+id/isrl_tv_time"
+            android:layout_marginRight="15dp"
+            android:padding="10dp"
+            android:background="#FFF">
+
+            <TextView
+                android:id="@+id/isrl_tv_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="#333333"
+                android:text="发表问卷扣除10积分"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                android:id="@+id/isrl_tv_record"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="#FF076B05"
+                android:text="-10"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

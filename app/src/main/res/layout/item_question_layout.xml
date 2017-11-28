@@ -3,45 +3,78 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="10dp"
-    android:paddingTop="10dp"
-    android:paddingRight="10dp">
+    android:paddingRight="10dp"
+    android:paddingTop="10dp">
+
+    <com.jyz.handquestionnaire.ui.widget.CircleImageView
+        android:id="@+id/iql_civ_head"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_user_default" />
+
+
+    <TextView
+        android:id="@+id/iql_tv_publisher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/iql_civ_head"
+        android:layout_below="@+id/iql_tv_title"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/iql_civ_head"
+        android:text="宋智航"
+        android:textColor="#333333"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/iql_tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/iql_civ_head"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_toRightOf="@+id/iql_civ_head"
+        android:text="2019-12-12"
+        android:textColor="#333333"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/iql_tv_finish_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/round_conors_bg"
+        android:paddingLeft="5dp"
+        android:paddingTop="3dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="3dp"
+        android:text="已结束"
+        android:textColor="#333333"
+        android:textSize="13sp" />
+
 
     <TextView
         android:id="@+id/iql_tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxLines="2"
-        android:textSize="16sp"
-        android:text="当今世界还有哪个国家比中国要牛逼?没有了"
+        android:layout_below="@+id/iql_civ_head"
         android:layout_marginBottom="13dp"
+        android:layout_marginTop="10dp"
         android:ellipsize="end"
-        android:textColor="#111111"/>
+        android:maxLines="2"
+        android:text="当今世界还有哪个国家比中国要牛逼?没有了"
+        android:textColor="#111111"
+        android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/iql_tv_publisher"
-        android:layout_below="@+id/iql_tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="发布人: 宋智航"
-        android:textSize="13sp"
-        android:textColor="#333333"/>
-
-    <TextView
-        android:layout_below="@+id/iql_tv_title"
-        android:id="@+id/iql_tv_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:text="发布时间：2019-12-12"
-        android:layout_marginRight="10dp"
-        android:textSize="13sp"
-        android:textColor="#333333"/>
 
     <View
-        android:layout_below="@+id/iql_tv_time"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_below="@+id/iql_tv_title"
         android:layout_marginTop="10dp"
-        android:background="#CCCCCC"/>
+        android:background="#CCCCCC" />
 
 </RelativeLayout>
