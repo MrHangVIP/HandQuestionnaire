@@ -24,7 +24,7 @@ public class BaseApplication extends Application {
 //    private static List<EmojiItem> emojiItemList=new ArrayList<>();
 //
     {
-        PlatformConfig.setWeixin("wxf4b8773580a65693", "5dd54d261fe64389eb3c79b4de4b9319");
+        PlatformConfig.setWeixin("wx72057967cf7ca57d", "f9bb616fc8a0d97d10ff6c1ee36d81d2");
         PlatformConfig.setSinaWeibo("1769100272", "4a4a8bc77bcc74549f12450c97b759bf","http://sns.whalecloud.com");
         PlatformConfig.setQQZone("1106424833", "8rMXk0o4tTNnLQwj");
 

@@ -108,7 +108,13 @@ public class OkHttpHelp<T> {
                             });
                         } catch (final JSONException e) {
                             e.printStackTrace();
-                            listener.onFailed(e.toString());
+                            MyUtil.runOnUI(new Runnable() {
+                                @Override
+                                public void run() {
+                                    listener.onFailed(e.toString());
+                                }
+                            });
+
                         }
                     }
                 });
