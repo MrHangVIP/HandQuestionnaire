@@ -67,7 +67,7 @@ public class WheelDateUtil implements OnWheelChangedListener {
         yearAdapter.setLabel("年");// 添加文字
         yearAdapter.setTextSize(textSize);
         wv_year.setVisibleItems(5);
-        wv_year.setCurrentItem(year);// 初始化时显示的数据
+        wv_year.setCurrentItem(year-startYear);// 初始化时显示的数据
 
         // 月
         monthAdapter = new NumericWheelViewAdapter(context, 1, 12);

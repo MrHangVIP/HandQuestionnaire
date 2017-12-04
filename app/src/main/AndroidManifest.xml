@@ -41,7 +41,9 @@
         <activity android:name=".ui.activity.CreateBlankActivity"/>
         <activity android:name=".ui.activity.AnswerQuestionnaireActivity"/>
         <activity android:name=".ui.activity.QuestionnaireListActivity"/>
+        <activity android:name=".ui.activity.AnswerQuestionPreviewActivity"/>
         <activity android:name=".ui.activity.ScoreRecordActivity"/>
+        <activity android:name=".ui.activity.MyPublishActivity"/>
 
         <!-- 微信-->
         <activity

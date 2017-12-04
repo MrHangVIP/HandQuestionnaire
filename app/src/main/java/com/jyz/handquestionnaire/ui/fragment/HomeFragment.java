@@ -65,7 +65,7 @@ public class HomeFragment extends BaseFragment {
         fragments = new ArrayList<>();
         Bundle bundle = new Bundle();
         QuestionnaireFragment hotFragment = new QuestionnaireFragment();
-        bundle.putString("type", "1");
+        bundle.putString("type", "time");
         hotFragment.setArguments(bundle);
         QuestionnaireFragment newFragment = new QuestionnaireFragment();
         bundle.putString("type", "2");

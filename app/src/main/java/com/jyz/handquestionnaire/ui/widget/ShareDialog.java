@@ -43,6 +43,7 @@ public class ShareDialog extends Dialog implements View.OnClickListener, ShareIt
 	private Context mContext;
 	ShareItem item1,item2,item3,item4,item5;
 	Button cancelView;
+	private String shareContent="掌上问卷";
 	public ShareDialog(Activity activity) {
 		super(activity, R.style.TimeDialog);
 		this.mActivity = (BaseActivity)activity;
@@ -100,31 +101,36 @@ public class ShareDialog extends Dialog implements View.OnClickListener, ShareIt
 		switch (view.getId()){
 			case R.id.item_1:
 //				mActivity.toast("微信");
-				new ShareAction((BaseActivity) mContext).setPlatform(SHARE_MEDIA.WEIXIN).withText(mContext.getString(R.string.app_name_ch)).setCallback(umShareListener).share();
+				new ShareAction((BaseActivity) mContext).setPlatform(SHARE_MEDIA.WEIXIN).withText(shareContent).setCallback(umShareListener).share();
 				break;
 			case R.id.item_2:
 //				mActivity.toast("朋友圈");
-				new ShareAction((BaseActivity) mContext).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE).withText(mContext.getString(R.string.app_name_ch)).setCallback(umShareListener).share();
+				new ShareAction((BaseActivity) mContext).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE).withText(shareContent).setCallback(umShareListener).share();
 				break;
 			case R.id.item_3:
 //				mActivity.toast("空间");
-				new ShareAction((BaseActivity) mContext).setPlatform(SHARE_MEDIA.QZONE).withText(mContext.getString(R.string.app_name_ch)).setCallback(umShareListener).share();
+				new ShareAction((BaseActivity) mContext).setPlatform(SHARE_MEDIA.QZONE).withText(shareContent).setCallback(umShareListener).share();
 				break;
 			case R.id.item_4:
 //				mActivity.toast("QQ");
 				//目前不支持纯文本，应该是友盟的bug
 				Resources res=mActivity.getResources();
 				Bitmap bmp= BitmapFactory.decodeResource(res, R.drawable.app_logo);
-				new ShareAction((BaseActivity) mContext).setPlatform(SHARE_MEDIA.QQ).withText(mContext.getString(R.string.app_name_ch))
+				new ShareAction((BaseActivity) mContext).setPlatform(SHARE_MEDIA.QQ).withText(shareContent)
 						.withMedia(new UMImage(mContext,bmp)).setCallback(umShareListener).share();
 				break;
 			case R.id.item_5:
 //				mActivity.toast("微博");
-				new ShareAction((BaseActivity) mContext).setPlatform(SHARE_MEDIA.SINA).withText(mContext.getString(R.string.app_name_ch)).setCallback(umShareListener).share();
+				new ShareAction((BaseActivity) mContext).setPlatform(SHARE_MEDIA.SINA).withText(shareContent).setCallback(umShareListener).share();
 				break;
 
 		}
 		dismiss();
+	}
+
+	public ShareDialog setShareContent(String shareContent){
+		this.shareContent=shareContent;
+		return this;
 	}
 
 	private UMShareListener umShareListener = new UMShareListener() {

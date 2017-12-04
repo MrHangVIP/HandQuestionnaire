@@ -395,6 +395,7 @@ public class AnswerQuestionnaireActivity extends BaseActivity {
                 }
                 if(selection<least || selection>more){
                     toast("多选题选项个数请参考提示！");
+                    return;
                 }
             }
         }
@@ -416,13 +417,12 @@ public class AnswerQuestionnaireActivity extends BaseActivity {
             public void onSuccess(ResultItem object) {
                 ProgressDialogUtil.dismissProgressdialog();
                 if (!object.getResult().equals("fail")) {
-                    toast("回答成功！");
+                    toast(questionnaireItem.getThanks());
                     finish();
                 } else {
                     toast("回答失敗!请稍后重试");
                 }
             }
-
             @Override
             public void onFailed(String message) {
                 ProgressDialogUtil.dismissProgressdialog();

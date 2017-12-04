@@ -43,24 +43,7 @@ public class QuestionnaireFragment extends BaseFragment implements SwipeRefreshL
 
     private List<QuestionnaireItem> questionnaireItemList = new ArrayList<>();
     private String type;//问卷类型 1最热,2最新,3所有
-    private String userId;//问卷类型 1最热,2最新,3所有
-    private static final int refresh = 0x100;
-
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case refresh:
-                    swipeRefreshLayout.setRefreshing(false);
-                    if (getActivity() != null) {
-                        ((BaseActivity) getActivity()).toast("刷新成功！");
-                    }
-                    break;
-                default:
-            }
-        }
-    };
+    private String userId;
 
     @Override
     protected View getLayout(LayoutInflater inflater, ViewGroup container) {

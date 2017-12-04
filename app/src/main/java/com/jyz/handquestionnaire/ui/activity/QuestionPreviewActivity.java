@@ -131,6 +131,7 @@ public class QuestionPreviewActivity extends BaseActivity {
                 String finishTime = wheelDateUtil.getYear()
                         + "-" + wheelDateUtil.getMonth() + "-" + wheelDateUtil.getDay();
                 questionnaireItem.setFinishTime(finishTime);
+                toast("结束时间已选定");
                 timeWheelDialog.dismiss();
             }
         }, map);
@@ -338,6 +339,11 @@ public class QuestionPreviewActivity extends BaseActivity {
         ProgressDialogUtil.showProgressDialog(this, true);
         Map<String, String> params = new HashMap<>();
         UserItem userItem = BaseApplication.getAPPInstance().getmUser();
+        if(userItem==null){
+            toast("请先登陆");
+            tokenError();
+            return;
+        }
         params.put("userId", userItem.getUserId() + "");
         params.put("headUrl", userItem.getHeadUrl() + "");
         params.put("nickname", userItem.getNickName() + "");
@@ -345,7 +351,7 @@ public class QuestionPreviewActivity extends BaseActivity {
         params.put("introduce", questionnaireItem.getIntroduce());
         params.put("thanks", questionnaireItem.getThanks());
         params.put("finishTime", questionnaireItem.getFinishTime());
-        params.put("finishTimeStmp", DateUtil.getStringToDate(questionnaireItem.getFinishTime(),DateUtil.Date_Format_1)+"");
+        params.put("finishTimeStmp", DateUtil.getStringToDate(questionnaireItem.getFinishTime(),DateUtil.Date_Format_3)+"");
         int count = 0;
         for (int i = 0; i < questionnaireItem.getQuestionItemList().size(); i++) {
             QuestionItem questionItem = questionnaireItem.getQuestionItemList().get(i);

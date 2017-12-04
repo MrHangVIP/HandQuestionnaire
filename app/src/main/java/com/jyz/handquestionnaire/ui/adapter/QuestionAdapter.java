@@ -6,10 +6,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -21,7 +23,9 @@ import com.jyz.handquestionnaire.bean.AnswerItem;
 import com.jyz.handquestionnaire.bean.QuestionnaireItem;
 import com.jyz.handquestionnaire.bean.ResultItem;
 import com.jyz.handquestionnaire.listener.ResponseListener;
+import com.jyz.handquestionnaire.ui.activity.AnswerQuestionPreviewActivity;
 import com.jyz.handquestionnaire.ui.activity.AnswerQuestionnaireActivity;
+import com.jyz.handquestionnaire.ui.activity.MyPublishActivity;
 import com.jyz.handquestionnaire.ui.widget.CircleImageView;
 import com.jyz.handquestionnaire.ui.widget.MMAlert;
 import com.jyz.handquestionnaire.util.Constant;
@@ -74,6 +78,8 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         holder.iql_tv_publisher.setText(questionnaireItem.getNickName());
         holder.iql_tv_title.setText(questionnaireItem.getTitle());
         holder.iql_tv_time.setText(questionnaireItem.getCreateTime());
+        Log.e(TAG, "FinishTimeStmp: " + questionnaireItem.getFinishTimeStmp());
+        Log.e(TAG, "currentTimeMillis: " + System.currentTimeMillis());
         if (questionnaireItem.getFinishTimeStmp() < System.currentTimeMillis()) {
             holder.iql_tv_finish_time.setText("已结束");
             holder.iql_tv_finish_time.setTextColor(Color.parseColor("#333333"));
@@ -87,23 +93,22 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
             public void onClick(View view) {
                 //判断是否登录，已经登陆则判断是否是自己问卷，是否已经回答过问卷
                 if (SpfUtil.getBoolean(Constant.IS_LOGIN, false) && BaseApplication.getAPPInstance().getmUser() != null) {
-                    int userId=BaseApplication.getAPPInstance().getmUser().getUserId();
-                    if(userId==questionnaireItem.getUserId()){//是否是自己发布的
+                    int userId = BaseApplication.getAPPInstance().getmUser().getUserId();
+                    if (userId == questionnaireItem.getUserId()) {//是否是自己发布的
                         MMAlert.showAlert(mContext, "此问卷是您发布的！是否查看统计结果？", "温馨提示", "查看", "返回", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 //进入
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("questionnaireItem", questionnaireItem);
+                                ((BaseActivity) mContext).jumpToNext(MyPublishActivity.class, bundle);
                             }
-                        }, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-
-                            }
-                        });
+                        },null);
                         return;
                     }
                     //是否回答
-                    getAnswerList(userId,questionnaireItem);
+                    getAnswerList(userId, questionnaireItem);
+                    return;
                 }
                 goDetail(questionnaireItem);
             }
@@ -134,10 +139,10 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         }
     }
 
-    private void getAnswerList(int userId,final QuestionnaireItem questionnaireItem){
+    private void getAnswerList(int userId, final QuestionnaireItem questionnaireItem) {
         Map<String, String> map = new HashMap<>();
-        map.put("userId", userId+"");
-        map.put("questionnaireId", questionnaireItem.getQuestionnaireId()+"");
+        map.put("userId", userId + "");
+        map.put("questionnaireId", questionnaireItem.getQuestionnaireId() + "");
         ProgressDialogUtil.showProgressDialog(mContext, true);
         OkHttpHelp<ResultItem> okHttpHelp = OkHttpHelp.getInstance();
         okHttpHelp.httpRequest("", Constant.GET_ANSWER, map, new ResponseListener<ResultItem>() {
@@ -145,7 +150,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
             public void onSuccess(ResultItem object) {
                 ProgressDialogUtil.dismissProgressdialog();
                 JSONArray jsonArray = null;
-               final ArrayList<AnswerItem> answerItems=new ArrayList<AnswerItem>();
+                final ArrayList<AnswerItem> answerItems = new ArrayList<AnswerItem>();
                 try {
                     jsonArray = new JSONArray(object.getData());
                     for (int i = 0; i < jsonArray.length(); i++) {
@@ -155,28 +160,23 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } finally {
-                    if(answerItems.size()>0){
-                        MMAlert.showAlert(mContext, "您意已经回答过此问卷啦！是否查看结果？", "温馨提示", "查看", "返回", new DialogInterface.OnClickListener() {
+                    if (answerItems.size() > 0) {
+                        MMAlert.showAlert(mContext, "您已经回答过此问卷啦！是否查看结果？", "温馨提示", "查看", "返回", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 //进入
                                 Bundle bundle = new Bundle();
                                 bundle.putSerializable("questionnaireItem", questionnaireItem);
                                 bundle.putSerializable("answerList", answerItems);
-                                ((BaseActivity) mContext).jumpToNext(AnswerQuestionnaireActivity.class, bundle);
+                                ((BaseActivity) mContext).jumpToNext(AnswerQuestionPreviewActivity.class, bundle);
                             }
-                        }, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-
-                            }
-                        });
-                    }else{
+                        },null);
+                        return;
+                    } else {
                         goDetail(questionnaireItem);
                     }
                 }
             }
-
             @Override
             public void onFailed(String message) {
                 ProgressDialogUtil.dismissProgressdialog();
@@ -190,9 +190,13 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         });
     }
 
-    private void goDetail(QuestionnaireItem item){
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("questionnaireItem", item);
-        ((BaseActivity) mContext).jumpToNext(AnswerQuestionnaireActivity.class, bundle);
+    private void goDetail(QuestionnaireItem item) {
+        if (item.getFinishTimeStmp() < System.currentTimeMillis()) {
+            Toast.makeText(mContext,"此问卷已结束！",Toast.LENGTH_SHORT).show();
+        }else{
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("questionnaireItem", item);
+            ((BaseActivity) mContext).jumpToNext(AnswerQuestionnaireActivity.class, bundle);
+        }
     }
 }

@@ -125,7 +125,9 @@ public class UserCenterFragment extends BaseFragment {
         ful_iv_head.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changePhoto();
+                if(SpfUtil.getBoolean(Constant.IS_LOGIN,false)){
+                    changePhoto();
+                }
             }
         });
 
