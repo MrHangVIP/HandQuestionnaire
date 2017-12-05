@@ -1,6 +1,7 @@
 package com.jyz.handquestionnaire.ui.activity;
 
 import android.graphics.Color;
+import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -55,7 +56,7 @@ public class MyPublishActivity extends BaseActivity{
         if (questionnaireItem != null && questionnaireItem.getQuestionItemList() != null && questionnaireItem.getQuestionItemList().size() != 0) {
             aqal_tv_introduce.setText(questionnaireItem.getIntroduce());
             for (int i = 0; i < questionnaireItem.getQuestionItemList().size(); i++) {
-                QuestionItem questionItem = questionnaireItem.getQuestionItemList().get(i);
+                final QuestionItem questionItem = questionnaireItem.getQuestionItemList().get(i);
                 View view = LayoutInflater.from(mContext).inflate(R.layout.layout_blank_selection, null);
                 TextView lss_tv_num = (TextView) view.findViewById(R.id.lbs_tv_num);
                 EditText lbs_et_answer = (EditText) view.findViewById(R.id.lbs_et_answer);
@@ -93,6 +94,12 @@ public class MyPublishActivity extends BaseActivity{
                     @Override
                     public void onClick(View view) {
                         //跳转统计结果页
+                        if(TextUtils.equals("3",questionItem.getType())){
+                            return;
+                        }
+                        Bundle bundle=new Bundle();
+                        bundle.putSerializable("questionItem", questionItem);
+                        jumpToNext(AnswerCountActivity.class,bundle);
                     }
                 });
                 aqal_ll_table_layout.addView(view);
