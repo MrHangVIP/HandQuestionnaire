@@ -145,7 +145,7 @@ public class HomeFragment extends BaseFragment {
         }
     }
 
-    class MyFragmentAdapter extends FragmentStatePagerAdapter {
+    class MyFragmentAdapter extends FragmentPagerAdapter {
 
 
         public MyFragmentAdapter(FragmentManager fm) {

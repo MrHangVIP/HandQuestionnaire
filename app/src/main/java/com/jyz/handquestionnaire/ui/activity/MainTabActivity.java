@@ -124,7 +124,21 @@ public class MainTabActivity extends BaseActivity {
     private void replaceFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager()
                 .beginTransaction();
-        transaction.replace(R.id.aml_fl_content, fragment);
+        if(!fragment.isAdded()){
+            transaction.add(R.id.aml_fl_content, fragment);
+        }
+        if(fragment ==homeFragment){
+            transaction.show(homeFragment);
+            if(userCenterFragment!=null && userCenterFragment.isAdded()){
+                transaction.hide(userCenterFragment);
+            }
+        }
+        if(fragment ==userCenterFragment){
+            transaction.show(userCenterFragment);
+            if(homeFragment!=null && homeFragment.isAdded()){
+                transaction.hide(homeFragment);
+            }
+        }
         transaction.commit();
     }
 
