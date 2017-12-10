@@ -25,6 +25,7 @@ public class Constant {
     public static final String GET_SCORE_RECORD="/GetScoreRecord";
     public static final String GET_ANSWER="/GetAnswer";
     public static final String GET_QUESTION_ANSWERS="/GetQuestionAnswers";
+    public static final String UPDATE_PASS_WORD="/UpdatePassWord";
 
     public static final int IMAGE_UPLOAD_OK=0x1000;
     public static final int IMAGE_UPLOAD_FAIL=0x1001;

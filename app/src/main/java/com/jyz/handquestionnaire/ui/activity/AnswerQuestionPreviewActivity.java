@@ -89,7 +89,7 @@ public class AnswerQuestionPreviewActivity extends BaseActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 new ShareDialog((Activity) AnswerQuestionPreviewActivity.this).
-                        setShareContent("我在掌上问卷上回答了一个问卷，快来看看吧！").show();
+                        setShareContent("我在掌上问卷上回答了（" + questionnaireItem.getTitle() + "）这个问卷，快来看看吧！").show();
                 return true;
             }
         });

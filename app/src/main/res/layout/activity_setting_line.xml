@@ -55,6 +55,7 @@
 		android:background="#CCCCCC"/>
 
 	<LinearLayout
+		android:id="@+id/asl_ll_aboutus"
 		android:layout_width="match_parent"
 		android:layout_height="45dp"
 		android:orientation="horizontal">

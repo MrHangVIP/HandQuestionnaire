@@ -393,7 +393,11 @@ public class QuestionPreviewActivity extends BaseActivity {
                     }
                     finish();
                 } else {
-                    toast("创建问卷出错!请稍后重试");
+                    if(object.getData().equals("sqlFial")){
+                        toast("创建问卷出错!请稍后重试");
+                    }else{
+                        toast(object.getData());
+                    }
                 }
             }
 

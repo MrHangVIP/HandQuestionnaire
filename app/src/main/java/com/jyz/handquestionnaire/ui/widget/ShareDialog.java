@@ -14,9 +14,7 @@ package com.jyz.handquestionnaire.ui.widget;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,6 +25,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.jyz.handquestionnaire.BaseActivity;
+import com.jyz.handquestionnaire.BaseApplication;
 import com.jyz.handquestionnaire.R;
 import com.jyz.handquestionnaire.bean.ShareItem;
 import com.jyz.handquestionnaire.model.ShareModel;
@@ -44,6 +43,8 @@ public class ShareDialog extends Dialog implements View.OnClickListener, ShareIt
 	ShareItem item1,item2,item3,item4,item5;
 	Button cancelView;
 	private String shareContent="掌上问卷";
+	private UMImage shareImage;
+	private BitmapDrawable bitmap = (BitmapDrawable) BaseApplication.getAPPInstance().getResources().getDrawable(R.drawable.app_logo);;
 	public ShareDialog(Activity activity) {
 		super(activity, R.style.TimeDialog);
 		this.mActivity = (BaseActivity)activity;
@@ -55,7 +56,7 @@ public class ShareDialog extends Dialog implements View.OnClickListener, ShareIt
 		item4 = (ShareItem) view.findViewById(R.id.item_4);
 		item5 = (ShareItem) view.findViewById(R.id.item_5);
 		setItems();
-
+		shareImage=new UMImage(mContext,bitmap.getBitmap());
 		cancelView = (Button) view.findViewById(R.id.btn_cancel);
 		cancelView.setOnClickListener(this);
 
@@ -101,27 +102,49 @@ public class ShareDialog extends Dialog implements View.OnClickListener, ShareIt
 		switch (view.getId()){
 			case R.id.item_1:
 //				mActivity.toast("微信");
-				new ShareAction((BaseActivity) mContext).setPlatform(SHARE_MEDIA.WEIXIN).withText(shareContent).setCallback(umShareListener).share();
+				new ShareAction((BaseActivity) mContext)
+						.setPlatform(SHARE_MEDIA.WEIXIN)
+						.withText(shareContent)
+						.withMedia(shareImage)
+						.setCallback(umShareListener)
+						.share();
 				break;
 			case R.id.item_2:
 //				mActivity.toast("朋友圈");
-				new ShareAction((BaseActivity) mContext).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE).withText(shareContent).setCallback(umShareListener).share();
+				new ShareAction((BaseActivity) mContext)
+						.setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
+						.withText(shareContent)
+						.withMedia(shareImage)
+						.setCallback(umShareListener)
+						.share();
 				break;
 			case R.id.item_3:
 //				mActivity.toast("空间");
-				new ShareAction((BaseActivity) mContext).setPlatform(SHARE_MEDIA.QZONE).withText(shareContent).setCallback(umShareListener).share();
+				new ShareAction((BaseActivity) mContext)
+						.setPlatform(SHARE_MEDIA.QZONE)
+						.withText(shareContent)
+						.withMedia(shareImage)
+						.setCallback(umShareListener)
+						.share();
 				break;
 			case R.id.item_4:
 //				mActivity.toast("QQ");
 				//目前不支持纯文本，应该是友盟的bug
-				Resources res=mActivity.getResources();
-				Bitmap bmp= BitmapFactory.decodeResource(res, R.drawable.app_logo);
-				new ShareAction((BaseActivity) mContext).setPlatform(SHARE_MEDIA.QQ).withText(shareContent)
-						.withMedia(new UMImage(mContext,bmp)).setCallback(umShareListener).share();
+				new ShareAction((BaseActivity) mContext)
+						.setPlatform(SHARE_MEDIA.QQ)
+						.withText(shareContent)
+						.withMedia(shareImage)
+						.setCallback(umShareListener)
+						.share();
 				break;
 			case R.id.item_5:
 //				mActivity.toast("微博");
-				new ShareAction((BaseActivity) mContext).setPlatform(SHARE_MEDIA.SINA).withText(shareContent).setCallback(umShareListener).share();
+				new ShareAction((BaseActivity) mContext)
+						.setPlatform(SHARE_MEDIA.SINA)
+						.withText(shareContent)
+						.withMedia(shareImage)
+						.setCallback(umShareListener)
+						.share();
 				break;
 
 		}
@@ -183,5 +206,14 @@ public class ShareDialog extends Dialog implements View.OnClickListener, ShareIt
 				break;
 		}
 		return platformStr;
+	}
+
+	@Override
+	public void onDetachedFromWindow() {
+		super.onDetachedFromWindow();
+		if(bitmap!=null &&bitmap.getBitmap()!=null){
+			bitmap.getBitmap().recycle();
+			bitmap=null;
+		}
 	}
 }

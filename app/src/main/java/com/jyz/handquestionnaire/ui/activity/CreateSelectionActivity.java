@@ -256,8 +256,8 @@ public class CreateSelectionActivity extends BaseActivity {
      */
     private String[] getDatas() {
         String[] datas = new String[acsl_ll_selection_layout.getChildCount() ];
-        for (int i = 1; i < datas.length; i++) {
-            datas[i] = i + "";
+        for (int i = 0; i < datas.length; i++) {
+            datas[i] = i+1 + "";
         }
         return datas;
     }

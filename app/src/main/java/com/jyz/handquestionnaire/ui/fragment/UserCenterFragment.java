@@ -23,9 +23,11 @@ import com.jyz.handquestionnaire.bean.ResultItem;
 import com.jyz.handquestionnaire.bean.UserItem;
 import com.jyz.handquestionnaire.listener.ResponseListener;
 import com.jyz.handquestionnaire.model.UploadImageModel;
+import com.jyz.handquestionnaire.ui.activity.AboutUsActivity;
 import com.jyz.handquestionnaire.ui.activity.LoginActivity;
 import com.jyz.handquestionnaire.ui.activity.QuestionnaireListActivity;
 import com.jyz.handquestionnaire.ui.activity.ScoreRecordActivity;
+import com.jyz.handquestionnaire.ui.activity.UserInfoActivity;
 import com.jyz.handquestionnaire.ui.adapter.QuestionAdapter;
 import com.jyz.handquestionnaire.ui.widget.CircleImageView;
 import com.jyz.handquestionnaire.util.Constant;
@@ -61,6 +63,8 @@ public class UserCenterFragment extends BaseFragment {
     private TextView ful_tv_publish;
     private TextView ful_tv_write;
     private LinearLayout asl_ll_replaceuser;
+    private LinearLayout asl_ll_aboutus;
+    private LinearLayout asl_ll_update;
     private TextView ful_tv_score;
 
     private Uri photoUri;
@@ -113,6 +117,8 @@ public class UserCenterFragment extends BaseFragment {
         ful_tv_publish = (TextView) contentView.findViewById(R.id.ful_tv_publish);
         ful_tv_write = (TextView) contentView.findViewById(R.id.ful_tv_write);
         asl_ll_replaceuser = (LinearLayout) contentView.findViewById(R.id.asl_ll_replaceuser);
+        asl_ll_aboutus = (LinearLayout) contentView.findViewById(R.id.asl_ll_aboutus);
+        asl_ll_update = (LinearLayout) contentView.findViewById(R.id.asl_ll_update);
     }
 
     @Override
@@ -126,7 +132,7 @@ public class UserCenterFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 if(SpfUtil.getBoolean(Constant.IS_LOGIN,false)){
-                    changePhoto();
+                    jumpToNext(UserInfoActivity.class);
                 }
             }
         });
@@ -178,6 +184,20 @@ public class UserCenterFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 jumpToNext(ScoreRecordActivity.class);
+            }
+        });
+
+        asl_ll_update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toast("当前已经是最新版本！");
+            }
+        });
+
+        asl_ll_aboutus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                jumpToNext(AboutUsActivity.class);
             }
         });
     }
@@ -280,6 +300,7 @@ public class UserCenterFragment extends BaseFragment {
                     @Override
                     public void onFailed(String message) {
                         ProgressDialogUtil.dismissProgressdialog();
+                        tokenError();
                     }
 
                     @Override

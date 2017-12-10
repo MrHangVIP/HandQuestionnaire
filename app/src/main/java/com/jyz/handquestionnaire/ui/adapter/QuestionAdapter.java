@@ -73,7 +73,10 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         final QuestionnaireItem questionnaireItem = questionnaireItemList.get(position);
         if (!TextUtils.isEmpty(questionnaireItem.getHeadUrl())) {
-            Glide.with(mContext).load(questionnaireItem.getHeadUrl()).placeholder(R.drawable.img_user_default).into(holder.iql_civ_head);
+            Glide.with(mContext)
+                    .load(Constant.DEFAULT_URL+Constant.IMAGE_URL+questionnaireItem.getHeadUrl())
+                    .placeholder(R.drawable.img_user_default)
+                    .into(holder.iql_civ_head);
         }
         holder.iql_tv_publisher.setText(questionnaireItem.getNickName());
         holder.iql_tv_title.setText(questionnaireItem.getTitle());

@@ -97,7 +97,9 @@ public class AnswerQuestionnaireActivity extends BaseActivity {
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                new ShareDialog((Activity)AnswerQuestionnaireActivity.this ).show();
+                new ShareDialog((Activity)AnswerQuestionnaireActivity.this )
+                        .setShareContent("快来看看（" + questionnaireItem.getTitle() + "）这个问卷吧！")
+                        .show();
                 return true;
             }
         });

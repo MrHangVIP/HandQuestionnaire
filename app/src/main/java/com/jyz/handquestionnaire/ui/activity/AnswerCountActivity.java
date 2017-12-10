@@ -96,6 +96,9 @@ public class AnswerCountActivity extends BaseActivity {
     }
 
     private void setData() {
+        if(answerItems.size()==0){
+            return;
+        }
         ArrayList<BarEntry> entries = new ArrayList<>();//显示条目
         ArrayList<String> xVals = new ArrayList<String>();//横坐标标签
         //模拟数据

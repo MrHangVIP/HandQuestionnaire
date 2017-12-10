@@ -18,7 +18,7 @@ import java.util.List;
 public class WelComeActivity extends BaseActivity {
     private static final String TAG = "WelComeActivity";
     private ViewPager viewPager;
-    private TextView startTV;
+    private ImageView startTV;
     private List<View> views;
 
     @Override
@@ -28,7 +28,7 @@ public class WelComeActivity extends BaseActivity {
 
     @Override
     protected void findViews() {
-        startTV = (TextView) findViewById(R.id.awl_tv_start);
+        startTV = (ImageView) findViewById(R.id.awl_tv_start);
         viewPager = (ViewPager) this.findViewById(R.id.awl_vp_viewpager);
     }
 
