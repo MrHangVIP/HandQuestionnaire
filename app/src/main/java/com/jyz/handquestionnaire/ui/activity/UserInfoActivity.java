@@ -158,7 +158,6 @@ public class UserInfoActivity extends BaseActivity {
                 String finishTime = wheelDateUtil.getYear()
                         + "-" + wheelDateUtil.getMonth() + "-" + wheelDateUtil.getDay();
                 birthTV.setText(finishTime);
-                toast("结束时间已选定");
                 timeWheelDialog.dismiss();
                 UserItem user = BaseApplication.getAPPInstance().getmUser();
                 user.setBirthday(finishTime);
