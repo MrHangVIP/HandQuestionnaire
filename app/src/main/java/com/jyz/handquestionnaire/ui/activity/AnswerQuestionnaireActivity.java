@@ -392,7 +392,7 @@ public class AnswerQuestionnaireActivity extends BaseActivity {
                 }
                 int least=Integer.parseInt(item.getLeast());
                 int more=Integer.parseInt(item.getMore());
-                if(least<more){
+                if(least>more){
                     least=more;
                 }
                 if(selection<least || selection>more){
